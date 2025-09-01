@@ -2,25 +2,52 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #40444f;
+  --font-sans: var(--font-roboto);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-roboto);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #40444f;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), sans-serif;
+  margin: 0%;
+  padding: 0%;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: start;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1.25rem;
+  text-align: start;
+}
+
+h3 {
+  font-weight: 300;
+  font-size: 1rem;
+  text-align: start;
+}
+
+h4 {
+  font-weight: 200;
+  font-size: 0.75rem;
+  text-align: start;
 }
