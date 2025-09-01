@@ -1,10 +1,9 @@
-import DisplayCard from "@/components/cards/DisplayCard";
 import DisplayCardContainer from "@/components/cards/DisplayCardContainer";
 import { PageCardType } from "@/components/cards/Types";
 import Button from "@/components/common/Button";
 import CustomerSearch from "@/components/CustomerSearch";
 
-export default function PageActions() {
+export default function CustomerDashboard() {
 
     const cards: PageCardType[] = [
         {
@@ -24,13 +23,14 @@ export default function PageActions() {
             iconSize: 32
         },
         {
-            title: "Customers",
-            icon: "layers",
-            iconColor: "green",
-            data: "102",
+            title: "Growth",
+            icon: "chart-area",
+            iconColor: "yellow",
+            data: "-24%",
             type: "none",
             iconSize: 32
         }
+
     ]
 
     return (

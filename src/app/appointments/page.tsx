@@ -1,5 +1,5 @@
 import PageContainer from "@/components/page/PageContainer";
-import PageHeader from "@/components/page/PageHeaader";
+import PageHeader from "@/components/page/PageHeader";
 
 export default function Appointments() {
     return (
