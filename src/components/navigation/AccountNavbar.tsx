@@ -17,7 +17,7 @@ export default function AccountNavbar() {
 
     return (
         <div>
-            <ul id="account-navbar" className="flex flex-row gap-4 w-fit px-4">
+            <ul id="account-navbar" className="flex flex-row gap-8 w-fit px-4">
                 {
                     accountNavItems.map((item, key) => {
                         return (

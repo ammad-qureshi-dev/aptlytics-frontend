@@ -19,7 +19,7 @@ export default function NavItem({ navItem }: NavItemProp) {
     }
 
     return (
-        <Link href={navItem.href} className={`flex flex-row gap-2 w-fit h-8 p-1 text-md transition-all items-center ${isCurrentPath() ? "text-[#FF7B00]" : ""} hover:text-[#FF7B00]`}>
+        <Link href={navItem.href} className={`flex flex-row gap-2 w-fit h-8 transition-all items-center ${isCurrentPath() ? "text-[#FF7B00]" : ""} hover:text-[#FF7B00]`}>
             <DynamicIcon name={navItem.icon || DefaultIconName} className="" size={navItem.iconSize || DEFAULT_ICON_SIZE} />
             {
                 !HIDE_HREF_ICONS.includes(navItem.href) &&

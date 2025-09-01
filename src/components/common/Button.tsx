@@ -17,7 +17,7 @@ export default function Button({ label, type, action, icon, iconSize, onClick }:
     }
 
     return (
-        <button type={type} className={`h-12 ${type === "button" ? "w-32" : "w-full"} text-xl flex flex-row items-center justify-center gap-2 rounded-md cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 ${getColor()}`}>
+        <button type={type} className={`h-12 ${type === "button" ? "w-30" : "w-full"} text-lg flex flex-row items-center justify-center gap-2 rounded-md cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 ${getColor()}`}>
             {
                 icon &&
                 <DynamicIcon name={icon} size={iconSize} />

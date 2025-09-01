@@ -1,8 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import Button from "../common/Button";
-import NavItem from "./NavItem";
 import { DefaultIconName, NavItemType } from "./Types"
 import { DynamicIcon } from "lucide-react/dynamic";
 import { Telescope } from "lucide-react";
@@ -12,12 +10,11 @@ import MainNavbar from "./MainNavbar";
 import { userStore } from "@/stores/UserStore";
 
 export default function Navbar() {
-
-    // ToDo: Check login logic
     const user = userStore((state) => state.user);
     const pathname = usePathname();
 
-    if (user !== null) {
+    // ToDo: revert back to !== after retrieving login
+    if (user === null) {
         return (
             <div id="navbar" className="flex flex-row py-4 justify-between items-center shadow-xs border-b-2 border-b-gray-200">
                 <div className="flex flex-row items-center gap-4">
@@ -54,9 +51,11 @@ function LoginButton(pathname: string) {
     }
 
     if (pathname.includes("login")) {
-        navItem.href = "/auth/register"
-        navItem.label = "Register"
-        navItem.icon = "user-round-plus"
+        navItem = {
+            href: "/auth/register",
+            label: "Register",
+            icon: "user-round-plus"
+        }
     }
 
     return (

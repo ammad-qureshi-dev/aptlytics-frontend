@@ -32,7 +32,7 @@ export default function MainNavbar() {
 
     return (
         <div>
-            <ul id="action-navbar" className="flex flex-row gap-4 w-fit">
+            <ul id="action-navbar" className="flex flex-row gap-6 w-fit">
                 {
                     navItems.map((navItem, key) => {
                         return (
