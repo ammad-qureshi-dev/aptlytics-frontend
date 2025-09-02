@@ -15,7 +15,7 @@ export default function NavItem({ navItem }: NavItemProp) {
     const pathname = usePathname();
 
     const isCurrentPath = () => {
-        return pathname === navItem.href;
+        return pathname.includes(navItem.href);
     }
 
     return (

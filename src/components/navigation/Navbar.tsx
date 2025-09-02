@@ -1,13 +1,12 @@
 'use client';
 
-import Link from "next/link";
-import { DefaultIconName, NavItemType } from "./Types"
-import { DynamicIcon } from "lucide-react/dynamic";
+import { NavItemType } from "./Types"
 import { Telescope } from "lucide-react";
 import { usePathname } from "next/navigation";
 import AccountNavbar from "./AccountNavbar";
 import MainNavbar from "./MainNavbar";
 import { userStore } from "@/stores/UserStore";
+import LinkButton from "../common/LinkButton";
 
 export default function Navbar() {
     const user = userStore((state) => state.user);
@@ -58,12 +57,7 @@ function LoginButton(pathname: string) {
         }
     }
 
-    return (
-        <Link href={navItem.href} className={`flex flex-row gap-2 w-32 h-12 bg-[#FF7B00] p-4 mx-4 justify-center rounded-md text-white font-bold transition-all items-center`}>
-            <DynamicIcon name={navItem.icon || DefaultIconName} className="" size={navItem.iconSize} />
-            <span>{navItem.label}</span>
-        </Link>
-    )
+    return <LinkButton item={navItem} />
 }
 
 function DefaultLogo() {

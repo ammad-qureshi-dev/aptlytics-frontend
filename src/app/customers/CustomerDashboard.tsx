@@ -1,7 +1,8 @@
 import DisplayCardContainer from "@/components/cards/DisplayCardContainer";
 import { PageCardType } from "@/components/cards/Types";
-import Button from "@/components/common/Button";
+import LinkButton from "@/components/common/LinkButton";
 import CustomerSearch from "@/components/CustomerSearch";
+import { NavItemType } from "@/components/navigation/Types";
 
 export default function CustomerDashboard() {
 
@@ -33,6 +34,12 @@ export default function CustomerDashboard() {
 
     ]
 
+    const addNewCustomerItem: NavItemType = {
+        href: "/customers/add-customer",
+        label: "Add",
+        icon: "user-plus"
+    }
+
     return (
         <div id="page-actions"
             className={`flex flex-col lg:flex-row md:flex-col sm:flex-col
@@ -40,7 +47,7 @@ export default function CustomerDashboard() {
             <DisplayCardContainer cards={cards} />
             <div id="right-half" className="flex flew-row gap-4 w-full justify-end items-center lg:w-1/2 md:w-full sm:w-full">
                 <CustomerSearch />
-                <Button label="Add" type="button" action="primary" icon="user-plus" />
+                <LinkButton item={addNewCustomerItem} />
             </div>
         </div>
     )
