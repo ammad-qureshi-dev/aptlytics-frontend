@@ -17,6 +17,19 @@ export type MenuItemType = {
   isSelected: boolean;
 };
 
+export type StepNavigationType = {
+  step: number;
+  readonly type: string; // This string represents the component name of the step
+  readonly title: string;
+  readonly subtitle: string;
+  isFirst?: boolean;
+  isLast?: boolean;
+  isCurrentStep?: boolean;
+  isCompleted?: boolean;
+  parentStep?: number;
+  subSteps?: StepNavigationType[];
+};
+
 export const DefaultIconName: IconName = "hammer";
 
 export const DEFAULT_ICON_SIZE: number = 20;
