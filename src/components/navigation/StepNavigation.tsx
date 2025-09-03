@@ -28,21 +28,24 @@ interface StepProp {
 }
 
 function Step({ step }: StepProp) {
+
+    if (step.step === undefined) {
+        return null;
+    }
+
+
     return (
         <div id="step" className="flex flex-row gap-3 h-48 lg:h-24 md:h-36 sm:h-48">
-            <div id="icon" className="flex flex-col">
-                {
-                    step.isCompleted &&
-                    <div className="w-8 h-8 p-1 rounded-full text-white bg-[#FF7B00]">
-                        <DynamicIcon
-                            name="check"
-                            size={24} />
-                    </div>
-                }
-
+            <div id="icon" className="flex flex-col border">
                 {/* Circle + Top half of line */}
                 {
-                    !step.isCompleted && step.isCurrentStep &&
+                    step.isFirst && step.isCurrentStep &&
+                    <div className="w-8 h-8 p-1 rounded-full border-2 border-[#FF7B00] text-[#FF7B00] flex items-center justify-center">
+                        <span>{step.step}</span>
+                    </div>
+                }
+                {
+                    !step.isFirst && step.isCurrentStep &&
                     <div className="w-8 h-8 p-1 rounded-full border-2 border-[#FF7B00] text-[#FF7B00] flex items-center justify-center">
                         <span>{step.step}</span>
                     </div>
@@ -53,35 +56,70 @@ function Step({ step }: StepProp) {
                         <span>{step.step}</span>
                     </div>
                 }
-
+                {
+                    !step.isLast && step.isCurrentStep && step.isCompleted &&
+                    <div className="w-8 h-8 p-1 rounded-full border-2 border-gray-300 text-gray-300 flex items-center justify-center">
+                        <span>{step.step}</span>
+                    </div>
+                }
+                {
+                    step.isCompleted &&
+                    <div className="w-8 h-8 p-1 rounded-full text-white bg-[#FF7B00]">
+                        <DynamicIcon
+                            name="check"
+                            size={24} />
+                    </div>
+                }
 
                 {/* Vertical Line */}
+                {/* isCompleted, isCurrentStep, isFirst, isLast */}
+
                 {
-                    !step.isFirst && !step.isLast &&
+                    !step.step &&
                     <div id="center-line" className="border-l-1 border-l-white h-full ">
                         <div
                             id="left-half"
-                            className="border-0 w-4 border-r-2 border-r-gray-300 h-full"
+                            className="border-0 w-4 border-r-2 border-r-white h-full"
                         >
                         </div>
-                    </div>
-                }
-                {
-                    !step.isLast && !step.isCurrentStep &&
-                    <div id="center-line" className="border-l-1 border-l-white h-full ">
-                        <div
-                            id="left-half"
-                            className="border-0 w-4 border-r-2 border-r-gray-300 h-full"
-                        >
-                        </div>
-                    </div>
-                }
-                {
-                    step.isLast &&
-                    <div id="center-line" className="border-l-1 border-l-white h-full ">
                     </div>
                 }
 
+                {
+                    step.isCompleted &&
+                    <div id="center-line" className="border-l-1 border-l-white h-full ">
+                        <div
+                            id="left-half"
+                            className="border-0 w-4 border-r-2 border-r-[#FF7B00] h-full"
+                        >
+                        </div>
+                    </div>
+                }
+                {
+                    step.isCompleted && !step.isLast &&
+                    <div id="center-line" className="border-l-1 border-l-white h-full ">
+                        <div
+                            id="left-half"
+                            className="border-0 w-4 border-r-2 border-r-[#FF7B00] h-full"
+                        >
+                        </div>
+                    </div>
+                }
+                {
+                    !step.isCompleted && !step.isLast &&
+                    <div id="center-line" className="border-l-1 border-l-white h-full ">
+                        <div
+                            id="left-half"
+                            className="border-0 w-4 border-r-2 border-r-gray-200 h-full"
+                        >
+                        </div>
+                    </div>
+                }
+                {
+                    step.isCompleted && step.isLast &&
+                    <div id="center-line" className="border-l-1 border-l-white h-full ">
+                    </div>
+                }
             </div>
             <div className="flex flex-col">
                 <span className="font-medium">{step.title}</span>
