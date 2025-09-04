@@ -1,11 +1,12 @@
 import { BadgeCheck, Check, PartyPopper } from "lucide-react";
 import { JourneyStepType } from "./JourneyStepConfig";
+import { DynamicIcon } from "lucide-react/dynamic";
 
 interface JourneyStepProp {
     step: JourneyStepType;
 }
 
-export default function JourneyStep({ step }: JourneyStepProp) {
+export default function JourneyStepIcon({ step }: JourneyStepProp) {
     switch (step.status) {
         case "IN_PROGRESS": return <InProgressStep step={step} />
         case "NOT_STARTED": return <NotStartedStep step={step} />
@@ -30,7 +31,7 @@ function CompletedStep({ step }: JourneyStepProp) {
                     }
                     {
                         !step.isLast &&
-                        <Check />
+                        <DynamicIcon name={step.icon || "hammer"} />
                     }
                 </div>
                 {
@@ -42,7 +43,7 @@ function CompletedStep({ step }: JourneyStepProp) {
             </div>
             <div id="info-container">
                 <div id="labels" className="flex flex-col">
-                    <span id="title" className="font-semibold text-lg">{step.title}</span>
+                    <span id="title" className="font-semibold text-lg">{step.stepId}. {step.title}</span>
                     <span id="subtitle" className="text-gray-600 hidden lg:block md:block sm:hiiden">{step.subtitle}</span>
                 </div>
             </div>
@@ -54,9 +55,11 @@ function InProgressStep({ step }: JourneyStepProp) {
     return (
         <div id="journey-step" className={journeyStepStyle}>
             <div id="left" className="w-10 flex flex-col justify-start ">
-                <span id="step-number"
+                <div id="step-number"
                     className={`border-[#FF7B00] border-2 text-[#FF7B00] ${stepNumberStyle}`}
-                >{step.stepId}</span>
+                >
+                    <DynamicIcon name={step.icon || "hammer"} />
+                </div>
                 {
                     !step.isLast &&
                     <div className="flex justify-center items-center h-22">
@@ -66,7 +69,7 @@ function InProgressStep({ step }: JourneyStepProp) {
             </div>
             <div id="info-container">
                 <div id="labels" className="flex flex-col">
-                    <span id="title" className="font-semibold text-lg">{step.title}</span>
+                    <span id="title" className="font-semibold text-lg">{step.stepId}. {step.title}</span>
                     <span id="subtitle" className="text-gray-600 hidden lg:block md:block sm:hiiden">{step.subtitle}</span>
                 </div>
             </div>
@@ -78,9 +81,11 @@ function NotStartedStep({ step }: JourneyStepProp) {
     return (
         <div id="journey-step" className={journeyStepStyle}>
             <div id="left" className="w-10 flex flex-col justify-start ">
-                <span id="step-number"
+                <div id="step-number"
                     className={`border-gray-300 border-2 text-gray-400 ${stepNumberStyle}`}
-                >{step.stepId}</span>
+                >
+                    <DynamicIcon name={step.icon || "hammer"} />
+                </div>
                 {
                     !step.isLast &&
                     <div className="flex justify-center items-center h-22">
@@ -90,7 +95,7 @@ function NotStartedStep({ step }: JourneyStepProp) {
             </div>
             <div id="info-container">
                 <div id="labels" className="flex flex-col">
-                    <span id="title" className="font-semibold text-gray-400 text-lg">{step.title}</span>
+                    <span id="title" className="font-semibold text-gray-400 text-lg">{step.stepId}. {step.title}</span>
                     <span id="subtitle" className="text-gray-400 hidden lg:block md:block sm:hiiden">{step.subtitle}</span>
                 </div>
             </div>

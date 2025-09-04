@@ -1,93 +1,78 @@
-import { JourneyStepType } from "./JourneyStepConfig";
+import { findCurrentJourney, JourneyStepType } from "./JourneyStepConfig";
 import { useState } from "react";
-import { Journeys } from "./JourneyConfig";
-import Button from "../common/Button";
+import { JourneyComponents } from "./journeys/add-customer-journey/AddCustomerJourneyConfig";
 import JourneyStepper from "./JourneyStepper";
+import Button from "../common/Button";
+import JourneyStepContainer from "./JourneyStepContainer";
+import { JourneyData, Journeys } from "./JourneyConfig";
 
 interface JourneyContainerProp {
     journeyName: string;
-    children?: React.ReactNode;
 }
 
-export default function JourneyContainer({ journeyName, children }: JourneyContainerProp) {
+export default function JourneyContainer({ journeyName }: JourneyContainerProp) {
+
     const [journeySteps, setJourneySteps] = useState<JourneyStepType[]>(Journeys[journeyName]);
-    const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const [currentJourney, setCurrentJourney] = useState<JourneyStepType>(findCurrentJourney(journeySteps));
+    const [journeyData, setJourneyData] = useState<JourneyData>({ alerts: [], formData: null });
+    const CurrentComponent = JourneyComponents[currentJourney.stepName];
 
-    const handleStepDecrementor = (nextStep: number) => {
-        setJourneySteps((prevSteps) => {
-            if (nextStep < 0 || nextStep >= prevSteps.length) {
-                return prevSteps;
-            }
 
-            const steps = [...prevSteps];
+    const handleNext = () => {
+        const steps = [...journeySteps];
+        const journey = { ...currentJourney };
+        const currentIndex = journey.stepId - 1;
 
-            steps[currentStepIndex] = {
-                ...steps[currentStepIndex],
-                status: "NOT_STARTED",
-            };
+        journey.status = "COMPLETED";
+        steps[currentIndex] = journey;
 
-            steps[nextStep] = {
-                ...steps[nextStep],
-                status: "IN_PROGRESS",
-            };
+        setCurrentJourney(journey);
+        setJourneySteps(steps);
 
-            setCurrentStepIndex(nextStep);
-            return steps;
-        });
-    };
+        if (!journey.isLast) {
+            const newJourney = { ...steps[currentIndex + 1], status: "IN_PROGRESS" as const };
+            steps[currentIndex + 1] = newJourney;
 
-    const handleStepIncrementor = (nextStep: number) => {
-        setJourneySteps((prevSteps) => {
-            if (nextStep < 0 || nextStep > prevSteps.length) {
-                return prevSteps;
-            }
+            setCurrentJourney(newJourney);
+            setJourneySteps(steps);
+        }
+    }
 
-            const steps = [...prevSteps];
+    const handlePrevious = () => {
+        const steps = [...journeySteps];
+        const journey = { ...currentJourney };
+        const currentIndex = journey.stepId - 1;
 
-            steps[currentStepIndex] = {
-                ...steps[currentStepIndex],
-                status: "COMPLETED",
-            };
+        journey.status = "NOT_STARTED";
+        steps[currentIndex] = journey;
 
-            if (nextStep < prevSteps.length) {
-                steps[nextStep] = {
-                    ...steps[nextStep],
-                    status: "IN_PROGRESS",
-                };
-            } else {
-                steps[prevSteps.length - 1] = {
-                    ...steps[prevSteps.length - 1],
-                    status: "COMPLETED",
-                };
-            }
+        setCurrentJourney(journey);
+        setJourneySteps(steps);
 
-            setCurrentStepIndex(Math.min(nextStep, prevSteps.length - 1));
-            return steps;
-        });
-    };
+        if (currentIndex > 0) {
+            const newJourney = { ...steps[currentIndex - 1], status: "IN_PROGRESS" as const };
+            steps[currentIndex - 1] = newJourney;
+
+            setCurrentJourney(newJourney);
+            setJourneySteps(steps);
+        }
+    }
 
     return (
-        <div id="step-navigation" className="w-full border flex flex-row justify-between">
-            <div id="content" className="w-full flex flex-col justify-between border border-red-500">
-                {children}
+        <div id="step-navigation" className="w-full flex flex-row justify-between py-4 gap-8">
+            <JourneyStepper steps={journeySteps} />
 
-                <div id="journey-navigation" className="w-full flex flex-row gap-8 border border-green-400">
-                    <Button
-                        label="Prev"
-                        type="button"
-                        action="secondary"
-                        onClick={() => handleStepDecrementor(currentStepIndex - 1)}
-                    />
-                    <Button
-                        label="Next"
-                        type="button"
-                        action="primary"
-                        onClick={() => handleStepIncrementor(currentStepIndex + 1)}
-                    />
+            <div id="content" className="w-full flex flex-col justify-between">
+                <JourneyStepContainer journeyStep={currentJourney}>
+                    <CurrentComponent journeyStep={currentJourney} updateJourneyFormData={setJourneyData} />
+                </JourneyStepContainer>
+
+                <div id="journey-progression" className="flex flex-row gap-4 justify-end">
+                    <Button label="Previous" type="button" action="secondary" onClick={handlePrevious} />
+                    <Button label="Next" type="button" action="primary" onClick={handleNext} isDisabled={journeyData.alerts.length > 0} />
                 </div>
             </div>
-
-            <JourneyStepper steps={journeySteps} />
         </div>
     );
 }
+

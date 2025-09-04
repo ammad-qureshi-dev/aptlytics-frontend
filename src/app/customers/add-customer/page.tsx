@@ -8,9 +8,7 @@ export default function AddCustomer() {
     return (
         <PageContainer>
             <PageHeader title="Add Customer" subTitle="Congrats on getting a new customer" icon="party-popper" iconColor="orange" />
-            <JourneyContainer journeyName="AddCustomerJourneySteps">
-                {/* add journey forms here */}
-            </JourneyContainer>
+            <JourneyContainer journeyName="AddCustomerJourneySteps" />
         </PageContainer>
     )
 }
