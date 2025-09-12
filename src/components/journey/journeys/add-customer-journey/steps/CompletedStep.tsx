@@ -1,6 +1,6 @@
-import { JourneyStepContainerProp } from "../AddCustomerJourneyConfig";
+import { JourneyStepContainerProp } from "@/components/journey/JourneyConfig";
 
-export default function CompletedStep({ journeyStep, updateJourneyFormData }: JourneyStepContainerProp) {
+export default function CompletedStep({ journeyStep, updateCurrentJourney }: JourneyStepContainerProp) {
     return (
         <div id="success-step">
             success-step

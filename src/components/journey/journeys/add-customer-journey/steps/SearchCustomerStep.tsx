@@ -1,6 +1,6 @@
 import { JourneyStepContainerProp } from "@/components/journey/JourneyConfig";
 
-export default function ValidateCustomerStep({ journeyStep, updateJourneyFormData }: JourneyStepContainerProp) {
+export default function SearchCustomerStep({ journeyStep, }: JourneyStepContainerProp) {
 
     /*
 

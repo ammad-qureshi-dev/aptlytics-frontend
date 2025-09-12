@@ -44,7 +44,7 @@ function CompletedStep({ step }: JourneyStepProp) {
             <div id="info-container">
                 <div id="labels" className="flex flex-col">
                     <span id="title" className="font-semibold text-lg">{step.stepId}. {step.title}</span>
-                    <span id="subtitle" className="text-gray-600 hidden lg:block md:block sm:hiiden">{step.subtitle}</span>
+                    <span id="subtitle" className="text-gray-600 hidden lg:block md:hidden sm:hidden">{step.subtitle}</span>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@ function InProgressStep({ step }: JourneyStepProp) {
             <div id="info-container">
                 <div id="labels" className="flex flex-col">
                     <span id="title" className="font-semibold text-lg">{step.stepId}. {step.title}</span>
-                    <span id="subtitle" className="text-gray-600 hidden lg:block md:block sm:hiiden">{step.subtitle}</span>
+                    <span id="subtitle" className="text-gray-600 hidden lg:block md:hidden sm:hidden">{step.subtitle}</span>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@ function NotStartedStep({ step }: JourneyStepProp) {
             <div id="info-container">
                 <div id="labels" className="flex flex-col">
                     <span id="title" className="font-semibold text-gray-400 text-lg">{step.stepId}. {step.title}</span>
-                    <span id="subtitle" className="text-gray-400 hidden lg:block md:block sm:hiiden">{step.subtitle}</span>
+                    <span id="subtitle" className="text-gray-400 hidden lg:block md:hidden sm:hidden">{step.subtitle}</span>
                 </div>
             </div>
         </div>

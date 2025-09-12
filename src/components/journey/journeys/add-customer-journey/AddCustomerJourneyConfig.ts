@@ -1,41 +1,51 @@
 import FillOutDetailsStep from "@/components/journey/journeys/add-customer-journey/steps/FillOutDetailsStep";
 import CompletedStep from "@/components/journey/journeys/add-customer-journey/steps/CompletedStep";
 import ReviewStep from "@/components/journey/journeys/add-customer-journey/steps/ReviewStep";
-import ValidateCustomerStep from "@/components/journey/journeys/add-customer-journey/steps/ValidateCustomerStep";
-
-import { JourneyStepType } from "../../JourneyStepConfig";
+import SearchCustomerStep from "@/components/journey/journeys/add-customer-journey/steps/SearchCustomerStep";
+import { JourneyStep } from "../../JourneyConfig";
 
 export const JourneyComponents: Record<string, React.ComponentType<any>> = {
+  SearchCustomerStep,
   FillOutDetailsStep,
-  ValidateCustomerStep,
   ReviewStep,
   CompletedStep,
 };
 
-export const AddCustomerJourneySteps: JourneyStepType[] = [
+export const AddCustomerJourneySteps: JourneyStep[] = [
   {
     stepId: 1,
     prevStepName: null,
-    stepName: "FillOutDetailsStep",
-    nextStepName: "ValidateCustomerStep",
-    title: "Fill Out Details",
-    subtitle: "Enter customer's information",
+    stepName: "SearchCustomerStep",
+    nextStepName: "FillOutDetailsStep",
+    title: "Search Customer",
+    subtitle: "Check if customer exists",
     status: "IN_PROGRESS",
-    icon: "book-open-text",
+    icon: "user-round-search",
+    journeyAction: {
+      url: "/{businessId}/search",
+      method: "GET",
+      pathVariables: ["businessId"],
+      requestParams: ["param"],
+    },
   },
   {
     stepId: 2,
-    prevStepName: "FillOutDetailsStep",
-    stepName: "ValidateCustomerStep",
+    prevStepName: "SearchCustomerStep",
+    stepName: "FillOutDetailsStep",
     nextStepName: "ReviewStep",
-    title: "Validate Customer",
-    subtitle: "Checking existing records",
+    title: "Fill Out Details",
+    subtitle: "Enter customer's information",
     status: "NOT_STARTED",
-    icon: "user-round-check",
+    icon: "book-open-text",
+    journeyAction: {
+      url: "/customer/{businessId}",
+      method: "POST",
+      pathVariables: ["businessId"],
+    },
   },
   {
     stepId: 3,
-    prevStepName: "ValidateCustomerStep",
+    prevStepName: "FillOutDetailsStep",
     stepName: "ReviewStep",
     nextStepName: "CompletedStep",
     title: "Review",
