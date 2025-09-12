@@ -1,6 +1,6 @@
 import type { DynamicIcon } from "lucide-react/dynamic";
 
-type IconName = React.ComponentProps<typeof DynamicIcon>["name"];
+export type IconName = React.ComponentProps<typeof DynamicIcon>["name"];
 
 export type NavItemType = {
   readonly href: string;
