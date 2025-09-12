@@ -16,8 +16,9 @@ export type JourneyStep = {
   isLast?: boolean;
   icon?: Icon | "hammer";
   journeyAction?: JourneyAction;
-  cancelStepAction?: JourneyAction;
+  revertAction?: JourneyAction;
   formData?: any;
+  nextStepStore?: any;
 };
 
 export type JourneyAction = {
