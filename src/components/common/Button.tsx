@@ -1,6 +1,6 @@
 import { DynamicIcon } from "lucide-react/dynamic";
 
-type IconName = React.ComponentProps<typeof DynamicIcon>["name"];
+export type IconName = React.ComponentProps<typeof DynamicIcon>["name"];
 
 interface ButtonProp {
     label: string;

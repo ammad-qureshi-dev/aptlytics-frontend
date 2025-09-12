@@ -29,7 +29,7 @@ export default function Register() {
                         inputType: "text",
                         placeHolder: "xxx-xxx-xxxx",
                         value: registerRequest.password,
-                        isRequired: true,
+                        isRequired: false,
                         onValueChange: (value) => setRegisterRequest(prev => ({ ...prev, password: value })),
                     }} />
                     <FormInput input={{
@@ -37,7 +37,7 @@ export default function Register() {
                         inputType: "email",
                         placeHolder: "peter_parker@dailybugle.com",
                         value: registerRequest.email,
-                        isRequired: true,
+                        isRequired: false,
                         onValueChange: (value) => setRegisterRequest(prev => ({ ...prev, email: value })),
                     }} />
                     <FormInput input={{

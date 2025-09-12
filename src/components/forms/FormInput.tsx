@@ -18,6 +18,7 @@ export default function FormInput({ input }: FormInputProp) {
                 type={input.inputType}
                 placeholder={input?.placeHolder}
                 onChange={(e) => input.onValueChange(e.target.value)}
+                value={input.value ?? ""}
             />
         </div>
     )
