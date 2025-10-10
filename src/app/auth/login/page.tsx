@@ -6,28 +6,55 @@ import GridComponent from "@/components/forms/GridForm"
 import { LoginRequest } from "@/components/forms/Types";
 import NavItem from "@/components/navigation/NavItem"
 import { NavItemType } from "@/components/navigation/Types"
-import { useState } from "react";
+import { AuthController } from "@/server/controllers/AuthController";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 export default function Login() {
-    const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: "", password: "" });
+    const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: "", password: "", loginMethod: "PHONE", phoneNumber: "", inputtedValue: "" });
+    const router = useRouter();
+    const queryClient = useQueryClient();
+
+    const submitLoginRequest = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const request = { ...loginRequest };
+        if (request.inputtedValue.includes("@")) {
+            request.loginMethod = "EMAIL";
+            request.email = request.inputtedValue;
+        } else {
+            request.phoneNumber = request.inputtedValue;
+        }
+
+        const response = await AuthController.login(request);
+
+        if (response.data !== null) {
+            await new Promise((r) => setTimeout(r, 200));
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+            router.push("/dashboard");
+        }
+    }
 
     return (
         <div className="flex flex-col gap-4 m-auto mt-32 p-8 items-center justify-center border border-gray-100 shadow-md rounded-md bg-[#FBFBFB] lg:w-1/3 md:w-2/3 sm:w-full">
-            <Header />
-            <form className="w-full flex flex-col gap-8">
+            <header className="flex flex-col gap-2 text-left w-full mx-4">
+                <h1 className="text-xl font-bold">Welcome back 👋</h1>
+            </header>
+            <form className="w-full flex flex-col gap-8" onSubmit={submitLoginRequest}>
                 <GridComponent cols={2} gap={24}>
                     <FormInput input={{
-                        label: "Email",
-                        inputType: "email",
-                        placeHolder: "cool_person@domain.com",
-                        value: loginRequest.email,
+                        label: "Email/Phone",
+                        inputType: "text",
+                        placeHolder: "Enter your email or phone number",
+                        value: loginRequest.inputtedValue,
                         isRequired: true,
-                        onValueChange: (value) => setLoginRequest(prev => ({ ...prev, email: value })),
+                        onValueChange: (value) => setLoginRequest(prev => ({ ...prev, inputtedValue: value })),
                     }} />
                     <FormInput input={{
                         label: "Password",
                         inputType: "password",
-                        placeHolder: "super-secret-password",
+                        placeHolder: "super secret password",
                         value: loginRequest.password,
                         isRequired: true,
                         onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
@@ -37,17 +64,6 @@ export default function Login() {
             </form>
             <ActionLinks />
         </div>
-    )
-}
-
-function Header() {
-    return (
-        <>
-            <header className="flex flex-col gap-2 text-left w-full mx-4">
-                <h1 className="text-xl font-bold">Welcome back 👋</h1>
-            </header>
-        </>
-
     )
 }
 

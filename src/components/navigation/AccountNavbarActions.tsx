@@ -6,7 +6,7 @@ import { NavItemType } from "./Types";
 import HamburgerNavbar from "./HamburgerNavbar";
 import { useState } from "react";
 
-export default function AccountNavbar() {
+export default function AccountNavbarActions() {
 
     const [showHamburgerMenu, setShowHamburgerMenu] = useState<boolean>();
     const accountNavItems: NavItemType[] = [
@@ -16,8 +16,8 @@ export default function AccountNavbar() {
             icon: "bell"
         },
         {
-            href: "/account",
-            label: "Account",
+            href: "/profile",
+            label: "Profile",
             icon: "circle-user"
         }
     ];

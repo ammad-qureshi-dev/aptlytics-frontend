@@ -4,9 +4,11 @@ import { User } from "./Types";
 interface UserStore {
   user: User | null;
   setUserInContext: (user: User) => void;
+  clearUser: () => void;
 }
 
 export const userStore = create<UserStore>((set) => ({
   user: null,
   setUserInContext: (user) => set(() => ({ user })),
+  clearUser: () => set(() => ({ user: null })),
 }));

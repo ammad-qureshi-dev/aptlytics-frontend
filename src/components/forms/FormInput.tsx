@@ -19,6 +19,7 @@ export default function FormInput({ input }: FormInputProp) {
                 placeholder={input?.placeHolder}
                 onChange={(e) => input.onValueChange(e.target.value)}
                 value={input.value ?? ""}
+                required={input.isRequired}
             />
         </div>
     )

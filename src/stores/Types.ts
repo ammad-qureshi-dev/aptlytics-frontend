@@ -1,5 +1,7 @@
 export type User = {
-  readonly email: string;
-  readonly fullName: string;
-  readonly phoneNumber: string;
+  email: string;
+  fullName: string;
+  phoneNumber: string;
+  userId: string;
+  lastSignedInAs: "OWNER" | "EMPLOYEE" | "CUSTOMER";
 };

@@ -1,70 +1,89 @@
 'use client';
 
-import { NavItemType } from "./Types"
 import { Telescope } from "lucide-react";
-import { usePathname } from "next/navigation";
-import AccountNavbar from "./AccountNavbar";
-import MainNavbar from "./MainNavbar";
+import AccountNavbarActions from "./AccountNavbarActions";
+import NavbarActions from "./NavbarActions";
 import { userStore } from "@/stores/UserStore";
-import LinkButton from "../common/LinkButton";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "@/stores/Types";
+import { UserController } from "@/server/controllers/UserController";
+import AuthenticateButton from "../buttons/AuthenticateButton";
 
 export default function Navbar() {
-    const user = userStore((state) => state.user);
-    const pathname = usePathname();
 
-    // ToDo: revert back to !== after retrieving login
-    if (user === null) {
+
+    const fetchMe = async () => {
+        const response = await UserController.getMe();
+        if (response === undefined) {
+            return null;
+        }
+
+        userStore.getState().setUserInContext(response);
+        return response;
+    }
+
+    const { data, isLoading, isError, error, refetch } = useQuery<User>({
+        queryKey: ["user"],
+        queryFn: fetchMe
+    });
+
+    if (isLoading) {
         return (
-            <div id="navbar" className="flex flex-row py-4 justify-between items-center shadow-xs border-b-2 border-b-gray-200">
-                <div className="flex flex-row items-center gap-4">
-                    <BusinessTitleHeader />
-                    <MainNavbar />
-                </div>
-                <AccountNavbar />
+            <div
+                id="navbar"
+                className="flex flex-row justify-between items-center border"
+            >
+                loading...
             </div>
         )
     }
 
-    return (
-        <div id="navbar" className="flex flex-row py-4 justify-between items-center shadow-xs border-b-2 border-b-gray-200">
-            <DefaultLogo />
-            {LoginButton(pathname)}
-        </div>
-    )
-}
-
-function BusinessTitleHeader() {
-    return (
-        <div id="business-title-header" className="px-4  font-bold border-r-2 border-r-gray-300">
-            Physiotherapy First
-        </div>
-    )
-}
-
-function LoginButton(pathname: string) {
-
-    let navItem: NavItemType = {
-        href: "/auth/login",
-        label: "Login",
-        icon: "lock"
+    if (error) {
+        return (
+            <div
+                id="navbar"
+                className="flex flex-row justify-between items-center border"
+            >
+                error
+            </div>
+        )
     }
 
-    if (pathname.includes("login")) {
-        navItem = {
-            href: "/auth/register",
-            label: "Register",
-            icon: "user-round-plus"
-        }
+    if (data !== null) {
+        return (
+            <div
+                id="navbar"
+                className="flex flex-row justify-between items-center border border-gray-100 py-4 shadow-xs border-b-2"
+            >
+                <div className="flex flex-row">
+                    <DefaultLogo />
+                    <div className="border-l-2 border-gray-700 border hidden lg:flex flex-row gap-6 w-fit mx-4"></div>
+                    <NavbarActions />
+                </div>
+                <AccountNavbarActions />
+            </div>
+        )
+    } else {
+        return (
+            <div
+                id="navbar"
+                className="flex flex-row justify-between items-center border border-gray-100 py-4 shadow-xs border-b-2"
+            >
+                <DefaultLogo />
+                <AuthenticateButton />
+            </div>
+        )
     }
-
-    return <LinkButton item={navItem} />
 }
 
 function DefaultLogo() {
     return (
-        <div id="default-logo" className="flex flex-row gap-4 items-center mx-4 px-4">
+        <div
+            id="default-logo"
+            className="flex flex-row gap-4 items-center mx-4 px-4"
+        >
             <Telescope size={32} />
-            <span className="text-xl font-bold underline">Aptlytics</span>
+            <span className="text-xl font-semibold">Aptlytics</span>
         </div>
-    )
+    );
 }
