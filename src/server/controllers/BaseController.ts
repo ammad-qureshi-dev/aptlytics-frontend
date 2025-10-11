@@ -3,14 +3,41 @@ import { ResponseData, ServiceResponse } from "./Types";
 import { toast } from "react-toastify";
 
 export class BaseController {
-  static BACKEND_ENDPOINT_API: string = "http://localhost:8080/api";
+  static BACKEND_ENDPOINT_API = "http://localhost:8080/api";
+  private static isRedirecting = false;
 
   static axiosInstance = axios.create({
     baseURL: BaseController.BACKEND_ENDPOINT_API,
     withCredentials: true,
   });
 
-  static async getResponse(
+  // Setup interceptors once
+  static initializeInterceptors() {
+    if ((this.axiosInstance.interceptors.response as any)._initialized) return;
+    (this.axiosInstance.interceptors.response as any)._initialized = true;
+
+    this.axiosInstance.interceptors.response.use(
+      (response) => response,
+      (error: AxiosError) => {
+        const status = error.response?.status;
+
+        if (status === 401 && !this.isRedirecting) {
+          this.isRedirecting = true;
+          toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            window.location.href = "/auth/login";
+          }, 1500);
+        }
+
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  /**
+   * Centralized response handler for all API calls.
+   */
+  static async getResponse<T = any>(
     request: Promise<AxiosResponse<ServiceResponse>>
   ): Promise<ServiceResponse> {
     try {
@@ -18,17 +45,20 @@ export class BaseController {
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
-        this.displayAlertToasts(error.response?.data?.alerts ?? []);
-        // ToDo: redirect to login page on 403/401
+        const alerts = error.response?.data?.alerts ?? [];
+        this.displayAlertToasts(alerts);
+
         return (
           error.response?.data ?? {
             responseType: "ERROR",
-            description: error.message,
+            description: error.message ?? "Unknown error",
             responseSeverity: "ERROR",
             alerts: [],
           }
         );
       }
+
+      toast.error("Unexpected error occurred: " + (error as Error).message);
       throw error;
     }
   }
@@ -52,3 +82,6 @@ export class BaseController {
     }
   }
 }
+
+// Initialize interceptors globally
+BaseController.initializeInterceptors();

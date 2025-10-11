@@ -7,6 +7,8 @@ import { LoginRequest } from "@/components/forms/Types";
 import NavItem from "@/components/navigation/NavItem"
 import { NavItemType } from "@/components/navigation/Types"
 import { AuthController } from "@/server/controllers/AuthController";
+import { UserController } from "@/server/controllers/UserController";
+import { userStore } from "@/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -15,6 +17,15 @@ export default function Login() {
     const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: "", password: "", loginMethod: "PHONE", phoneNumber: "", inputtedValue: "" });
     const router = useRouter();
     const queryClient = useQueryClient();
+
+    const fetchMe = async () => {
+        const response = await UserController.getMe();
+        if (response !== undefined && response !== null) {
+            userStore.getState().setUserInContext(response);
+            return response;
+        }
+        return null;
+    };
 
     const submitLoginRequest = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,11 +39,11 @@ export default function Login() {
         }
 
         const response = await AuthController.login(request);
-
         if (response.data !== null) {
             await new Promise((r) => setTimeout(r, 200));
+            await fetchMe();
             queryClient.invalidateQueries({ queryKey: ["user"] });
-            router.push("/dashboard");
+            router.push("/auth/accounts");
         }
     }
 
