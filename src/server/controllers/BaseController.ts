@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ResponseData, ServiceResponse } from "./Types";
 import { toast } from "react-toastify";
+import { ResponseData, ServiceResponse } from "./Types";
+import { useUserStore } from "@/stores/UserStore";
 
 export class BaseController {
   static BACKEND_ENDPOINT_API = "http://localhost:8080/api";
@@ -11,7 +12,6 @@ export class BaseController {
     withCredentials: true,
   });
 
-  // Setup interceptors once
   static initializeInterceptors() {
     if ((this.axiosInstance.interceptors.response as any)._initialized) return;
     (this.axiosInstance.interceptors.response as any)._initialized = true;
@@ -20,10 +20,18 @@ export class BaseController {
       (response) => response,
       (error: AxiosError) => {
         const status = error.response?.status;
-
-        if (status === 401 && !this.isRedirecting) {
+        const url = error.config?.url;
+        console.log(url);
+        // Only redirect on 401 if NOT /login or /signup
+        if (
+          status === 401 &&
+          !this.isRedirecting &&
+          url !== "/auth/login" &&
+          url !== "/auth/register"
+        ) {
           this.isRedirecting = true;
           toast.error("Session expired. Redirecting to login...");
+          useUserStore.getState().clearUser();
           setTimeout(() => {
             window.location.href = "/auth/login";
           }, 1500);
@@ -34,9 +42,6 @@ export class BaseController {
     );
   }
 
-  /**
-   * Centralized response handler for all API calls.
-   */
   static async getResponse<T = any>(
     request: Promise<AxiosResponse<ServiceResponse>>
   ): Promise<ServiceResponse> {
@@ -84,4 +89,4 @@ export class BaseController {
 }
 
 // Initialize interceptors globally
-BaseController.initializeInterceptors();
+// BaseController.initializeInterceptors();

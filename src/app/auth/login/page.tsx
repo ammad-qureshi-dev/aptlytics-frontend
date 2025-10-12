@@ -8,7 +8,7 @@ import NavItem from "@/components/navigation/NavItem"
 import { NavItemType } from "@/components/navigation/Types"
 import { AuthController } from "@/server/controllers/AuthController";
 import { UserController } from "@/server/controllers/UserController";
-import { userStore } from "@/stores/UserStore";
+import { useUserStore } from "@/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -21,7 +21,7 @@ export default function Login() {
     const fetchMe = async () => {
         const response = await UserController.getMe();
         if (response !== undefined && response !== null) {
-            userStore.getState().setUserInContext(response);
+            useUserStore.getState().setUser(response);
             return response;
         }
         return null;

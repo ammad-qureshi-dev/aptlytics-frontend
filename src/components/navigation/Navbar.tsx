@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from "@tanstack/react-query";
-import { userStore } from "@/stores/UserStore";
+import { useUserStore } from "@/stores/UserStore";
 import { UserController } from "@/server/controllers/UserController";
 import { Telescope } from "lucide-react";
 import AccountNavbarActions from "./AccountNavbarActions";
@@ -9,21 +9,27 @@ import NavbarActions from "./NavbarActions";
 import AuthenticateButton from "../buttons/AuthenticateButton";
 
 export default function Navbar() {
-    const { user, setUserInContext } = userStore();
+    const { user, setUser, clearUser } = useUserStore();
 
     useQuery({
         queryKey: ["user"],
         queryFn: async () => {
-            if (!user) {
+            try {
                 const response = await UserController.getMe();
-                if (response) setUserInContext(response);
+                setUser(response);
                 return response;
+            } catch (err: any) {
+                if (err.response?.status === 401) {
+                    clearUser();
+                    return null;
+                }
+                throw err;
             }
-            return user;
         },
+        enabled: user === undefined,
         refetchOnWindowFocus: false,
-        staleTime: 5 * 60 * 1000,
         retry: false,
+        staleTime: 5 * 60 * 1000,
     });
 
     return (

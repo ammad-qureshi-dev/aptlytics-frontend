@@ -26,3 +26,9 @@ export type LoginRequest = {
   phoneNumber?: string;
   loginMethod: "PHONE" | "EMAIL";
 };
+
+export type UserProfile = {
+  label: string;
+  role: "CUSTOMER" | "EMPLOYEE" | "OWNER";
+  contextId: string;
+};
