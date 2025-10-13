@@ -1,70 +1,65 @@
 'use client';
 
-import { NavItemType } from "./Types"
+import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "@/stores/UserStore";
+import { UserController } from "@/server/controllers/UserController";
 import { Telescope } from "lucide-react";
-import { usePathname } from "next/navigation";
-import AccountNavbar from "./AccountNavbar";
-import MainNavbar from "./MainNavbar";
-import { userStore } from "@/stores/UserStore";
-import LinkButton from "../common/LinkButton";
+import AccountNavbarActions from "./AccountNavbarActions";
+import NavbarActions from "./NavbarActions";
+import AuthenticateButton from "../buttons/AuthenticateButton";
 
 export default function Navbar() {
-    const user = userStore((state) => state.user);
-    const pathname = usePathname();
+    const { user, setUser, clearUser } = useUserStore();
 
-    // ToDo: revert back to !== after retrieving login
-    if (user === null) {
-        return (
-            <div id="navbar" className="flex flex-row py-4 justify-between items-center shadow-xs border-b-2 border-b-gray-200">
-                <div className="flex flex-row items-center gap-4">
-                    <BusinessTitleHeader />
-                    <MainNavbar />
-                </div>
-                <AccountNavbar />
+    useQuery({
+        queryKey: ["user"],
+        queryFn: async () => {
+            try {
+                const response = await UserController.getMe();
+
+                if (response === undefined) {
+                    setUser(null);
+                    return null;
+                }
+
+                setUser(response);
+                return response ?? null;
+            } catch (err: any) {
+                if (err.response?.status === 401) {
+                    clearUser();
+                    return null;
+                }
+                throw err;
+            }
+        },
+        enabled: user === undefined,
+        refetchOnWindowFocus: false,
+        retry: false,
+        staleTime: 5 * 60 * 1000,
+    });
+
+    return (
+        <div className="flex flex-row justify-between items-center border border-gray-100 py-4 shadow-xs border-b-2">
+            <div className="flex flex-row">
+                <DefaultLogo />
+                {user && (
+                    <>
+                        <div className="border-l-2 border-gray-700 hidden lg:flex flex-row gap-6 w-fit mx-4"></div>
+                        <NavbarActions />
+                    </>
+                )}
             </div>
-        )
-    }
 
-    return (
-        <div id="navbar" className="flex flex-row py-4 justify-between items-center shadow-xs border-b-2 border-b-gray-200">
-            <DefaultLogo />
-            {LoginButton(pathname)}
+            {user ? <AccountNavbarActions /> : <AuthenticateButton />}
         </div>
-    )
-}
-
-function BusinessTitleHeader() {
-    return (
-        <div id="business-title-header" className="px-4  font-bold border-r-2 border-r-gray-300">
-            Physiotherapy First
-        </div>
-    )
-}
-
-function LoginButton(pathname: string) {
-
-    let navItem: NavItemType = {
-        href: "/auth/login",
-        label: "Login",
-        icon: "lock"
-    }
-
-    if (pathname.includes("login")) {
-        navItem = {
-            href: "/auth/register",
-            label: "Register",
-            icon: "user-round-plus"
-        }
-    }
-
-    return <LinkButton item={navItem} />
+    );
 }
 
 function DefaultLogo() {
     return (
-        <div id="default-logo" className="flex flex-row gap-4 items-center mx-4 px-4">
-            <Telescope size={32} />
-            <span className="text-xl font-bold underline">Aptlytics</span>
+        <div className="flex flex-row gap-4 items-center mx-4">
+            <Telescope size={32} className="text-[#FF7B00]" />
+            <span className="text-xl font-semibold text-[#FF7B00]">Aptlytics</span>
         </div>
-    )
+    );
 }

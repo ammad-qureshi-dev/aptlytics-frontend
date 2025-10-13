@@ -1,7 +1,7 @@
 import NavItem from "./NavItem"
 import { NavItemType } from "./Types"
 
-export default function MainNavbar() {
+export default function NavbarActions() {
     const navItems: NavItemType[] = [
         {
             href: "/appointments",
@@ -32,7 +32,7 @@ export default function MainNavbar() {
 
     return (
         <div>
-            <ul id="action-navbar" className="hidden lg:flex flex-row gap-6 w-fit">
+            <ul id="action-navbar" className="hidden lg:flex flex-row gap-6 w-fit mx-4">
                 {
                     navItems.map((navItem, key) => {
                         return (

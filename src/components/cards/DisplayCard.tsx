@@ -15,13 +15,13 @@ export default function DisplayCard({ card }: PageCardProp) {
     return (
         <div
             id="display-card"
-            className="flex flex-row gap-2 border border-gray-100 p-4 rounded-md shadow-md 
+            className="flex flex-row gap-2 border border-gray-50 p-4 rounded-md shadow-md 
                        items-center justify-between transition-all duration-300 
                        w-full 
-                       hover:-translate-y-1 hover:shadow-lg hover:scale-[1.02]"
+                       hover:-translate-y-1 hover:shadow-lg hover:scale-[1.02] bg-white"
         >
             <div className="flex flex-col">
-                <h3>{card.title}</h3>
+                <span className="font-300">{card.title}</span>
                 <h2>{card.data}</h2>
                 <span>{card.extra}</span>
             </div>

@@ -11,7 +11,7 @@ interface NavItemProp {
 
 export default function NavItem({ navItem }: NavItemProp) {
 
-    const HIDE_HREF_ICONS: string[] = ["/account", "/notifications"]
+    const HIDE_HREF_ICONS: string[] = ["/profile", "/notifications"]
     const pathname = usePathname();
 
     const isCurrentPath = () => {
