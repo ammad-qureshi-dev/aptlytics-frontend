@@ -3,18 +3,30 @@
 import Button from "@/components/common/Button";
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
-import { LoginRequest, RegisterRequest } from "@/components/forms/Types";
+import { RegisterRequest } from "@/components/forms/Types";
 import NavItem from "@/components/navigation/NavItem"
 import { NavItemType } from "@/components/navigation/Types"
-import { useState } from "react";
+import { AuthController } from "@/server/controllers/AuthController"
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 export default function Register() {
     const [registerRequest, setRegisterRequest] = useState<RegisterRequest>({ email: "", password: "", fullName: "", phoneNumber: "" });
+    const router = useRouter();
+
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const response = await AuthController.register(registerRequest);
+
+        if (response.success && response.data) {
+            router.push("/dashboard")
+        }
+    }
 
     return (
         <div className="flex flex-col gap-4 m-auto mt-32 p-8 items-center justify-center border border-gray-100 shadow-md rounded-md bg-[#FBFBFB] lg:w-1/3 md:w-2/3 sm:w-full">
             <Header />
-            <form className="w-full flex flex-col gap-8">
+            <form className="w-full flex flex-col gap-8" onSubmit={(e) => { onSubmit(e) }}>
                 <GridComponent cols={2} gap={24}>
                     <FormInput input={{
                         label: "Full Name",
@@ -28,9 +40,9 @@ export default function Register() {
                         label: "Phone",
                         inputType: "text",
                         placeHolder: "xxx-xxx-xxxx",
-                        value: registerRequest.password,
+                        value: registerRequest.phoneNumber,
                         isRequired: false,
-                        onValueChange: (value) => setRegisterRequest(prev => ({ ...prev, password: value })),
+                        onValueChange: (value) => setRegisterRequest(prev => ({ ...prev, phoneNumber: value })),
                     }} />
                     <FormInput input={{
                         label: "Email",
