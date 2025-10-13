@@ -65,7 +65,7 @@ export default function Login() {
                     <FormInput input={{
                         label: "Password",
                         inputType: "password",
-                        placeHolder: "super secret password",
+                        placeHolder: "super-secret-password",
                         value: loginRequest.password,
                         isRequired: true,
                         onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
