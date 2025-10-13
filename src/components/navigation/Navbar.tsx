@@ -16,8 +16,14 @@ export default function Navbar() {
         queryFn: async () => {
             try {
                 const response = await UserController.getMe();
+
+                if (response === undefined) {
+                    setUser(null);
+                    return null;
+                }
+
                 setUser(response);
-                return response;
+                return response ?? null;
             } catch (err: any) {
                 if (err.response?.status === 401) {
                     clearUser();
