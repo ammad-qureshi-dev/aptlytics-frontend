@@ -34,7 +34,6 @@ export default function Profile() {
                 <div className="flex flex-row items-center gap-2">
                     <span className="text-lg">Accounts</span>
                     <button onClick={() => { setShowAccountSelector(!showAccountSelector) }}>
-
                         {
                             showAccountSelector &&
                             <ChevronDownCircleIcon size={20} />
@@ -43,7 +42,6 @@ export default function Profile() {
                             !showAccountSelector &&
                             <ChevronRightCircleIcon size={20} />
                         }
-
                     </button>
                 </div>
 
