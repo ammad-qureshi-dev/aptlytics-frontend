@@ -4,7 +4,14 @@ export default function PageContainer({
     children: React.ReactNode;
 }>) {
     return (
-        <div id="page-container" className="flex flex-col border border-[#e8e8e8] bg-[#f7f7f7] p-8 rounded-md shadow-md m-4">
+        <div id="page-container" className="flex flex-col 
+    w-4/5 
+    mx-auto my-10 
+    bg-[#FBFBFB]
+    rounded-md
+    shadow-sm 
+    p-8 
+    border border-gray-100">
             {children}
         </div>
     )
