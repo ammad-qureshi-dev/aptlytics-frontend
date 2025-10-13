@@ -26,7 +26,7 @@ export default function AccountCard({ profile }: AccountCardProps) {
             id="account-card-container"
             className="
         flex w-full items-center justify-between p-4 gap-4 
-        border border-gray-200 rounded-xl shadow-sm 
+        border border-gray-50 rounded-xl shadow-sm 
         hover:shadow-lg transform hover:-translate-y-1 
         transition-all duration-200 bg-white cursor-pointer
       "
