@@ -12,9 +12,10 @@ import { useUserStore } from "@/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { LoginRequest as Payload } from "@/server/controllers/Types";
 
 export default function Login() {
-    const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: "", password: "", loginMethod: "PHONE", phoneNumber: "", inputtedValue: "" });
+    const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: undefined, password: undefined, loginMethod: "EMAIL", phoneNumber: undefined, inputtedValue: undefined });
     const router = useRouter();
     const queryClient = useQueryClient();
 
@@ -31,14 +32,26 @@ export default function Login() {
         e.preventDefault();
 
         const request = { ...loginRequest };
-        if (request.inputtedValue.includes("@")) {
-            request.loginMethod = "EMAIL";
-            request.email = request.inputtedValue;
-        } else {
-            request.phoneNumber = request.inputtedValue;
+
+        const payload: Payload = {
+            "email": undefined,
+            "phoneNumber": undefined,
+            "loginMethod": undefined,
+            "password": undefined
         }
 
-        const response = await AuthController.login(request);
+        if (request?.inputtedValue?.includes("@")) {
+            payload.loginMethod = "EMAIL"
+            payload.email = request.inputtedValue;
+        } else {
+            payload.loginMethod = "PHONE";
+            payload.phoneNumber = request.inputtedValue;
+        }
+
+        payload.password = request.password;
+
+        const response = await AuthController.login(payload);
+
         if (response.data !== null) {
             await new Promise((r) => setTimeout(r, 200));
             await fetchMe();

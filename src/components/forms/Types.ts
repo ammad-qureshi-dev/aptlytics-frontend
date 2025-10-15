@@ -19,10 +19,10 @@ export type GridComponentType = {
 
 export type LoginRequest = {
   email?: string;
-  password: string;
+  password?: string;
   phoneNumber?: string;
   loginMethod: "EMAIL" | "PHONE";
-  inputtedValue: string;
+  inputtedValue?: string;
 };
 
 export type RegisterRequest = {

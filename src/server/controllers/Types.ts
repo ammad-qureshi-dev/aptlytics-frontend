@@ -22,9 +22,9 @@ export type RegistrationRequest = {
 
 export type LoginRequest = {
   email?: string;
-  password: string;
+  password?: string;
   phoneNumber?: string;
-  loginMethod: "PHONE" | "EMAIL";
+  loginMethod?: "PHONE" | "EMAIL";
 };
 
 export type UserProfile = {

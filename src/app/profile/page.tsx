@@ -10,6 +10,7 @@ import { ChevronDownCircleIcon, ChevronRightCircleIcon } from "lucide-react";
 import { useState } from "react";
 
 export default function Profile() {
+    const [showAccountSelector, setShowAccountSelector] = useState<boolean>(false);
 
     const fetchMe = async () => {
         const response = await UserController.getMe();
@@ -23,8 +24,6 @@ export default function Profile() {
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
-
-    const [showAccountSelector, setShowAccountSelector] = useState<boolean>(false);
 
     return (
         <PageContainer>
