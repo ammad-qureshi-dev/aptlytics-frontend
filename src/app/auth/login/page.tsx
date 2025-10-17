@@ -53,10 +53,16 @@ export default function Login() {
         const response = await AuthController.login(payload);
 
         if (response.data !== null) {
-            await new Promise((r) => setTimeout(r, 200));
-            await fetchMe();
+            const user = await fetchMe();
             queryClient.invalidateQueries({ queryKey: ["user"] });
-            router.push("/auth/accounts");
+
+            if (user.verified) {
+                router.push("/auth/accounts");
+                return;
+            } else {
+                router.push("/auth/verify-account")
+                return;
+            }
         }
     }
 

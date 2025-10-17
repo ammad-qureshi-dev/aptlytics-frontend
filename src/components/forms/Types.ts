@@ -31,3 +31,9 @@ export type RegisterRequest = {
   fullName: string;
   phoneNumber: string;
 };
+
+export type AddCustomerRequest = {
+  email: string | undefined;
+  phoneNumber: string | undefined;
+  fullName: string | undefined;
+};

@@ -35,7 +35,7 @@ export default function CustomerDashboard() {
     ]
 
     const addNewCustomerItem: NavItemType = {
-        href: "/customers/add-customer",
+        href: "/customers/add-customer-v2",
         label: "Add",
         icon: "user-plus"
     }
