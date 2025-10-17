@@ -32,7 +32,7 @@ export default function NavbarActions() {
 
     return (
         <div>
-            <ul id="action-navbar" className="hidden lg:flex flex-row gap-6 w-fit mx-4">
+            <ul id="action-navbar" className="hidden lg:flex flex-row gap-8 w-fit mx-4">
                 {
                     navItems.map((navItem, key) => {
                         return (

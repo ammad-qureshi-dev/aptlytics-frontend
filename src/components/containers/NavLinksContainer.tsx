@@ -3,22 +3,22 @@ import { NavItemType } from "../navigation/Types";
 
 interface Prop {
     navLinks: NavItemType[];
+    gap?: number;
 }
 
-export default function NavLinksContainer({ navLinks }: Prop) {
+export default function NavLinksContainer({ navLinks, gap = 4 }: Prop) {
+    const remToPixels: number = gap * 4;
+
     return (
-        <>
-            <ul className="flex flex-row justify-between">
-                {
-                    navLinks.map((link, key) => {
-                        return (
-                            <li key={key}>
-                                <NavItem navItem={link} />
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-        </>
-    )
+        <ul
+            className="flex flex-row justify-between items-center"
+            style={{ gap: `${remToPixels}px` }}
+        >
+            {navLinks.map((link, key) => (
+                <li key={key}>
+                    <NavItem navItem={link} />
+                </li>
+            ))}
+        </ul>
+    );
 }

@@ -39,17 +39,11 @@ export default function Navbar() {
     });
 
     return (
-        <div className="flex flex-row justify-between items-center border border-gray-100 py-4 shadow-xs border-b-2">
+        <div className="flex flex-row justify-between items-center border border-gray-100 py-4 px-8 shadow-xs border-b-2">
             <div className="flex flex-row">
                 <DefaultLogo />
-                {user && (
-                    <>
-                        <div className="border-l-2 border-gray-700 hidden lg:flex flex-row gap-6 w-fit mx-4"></div>
-                        <NavbarActions />
-                    </>
-                )}
+                {user && <NavbarActions />}
             </div>
-
             {user ? <AccountNavbarActions /> : <AuthenticateButton />}
         </div>
     );
