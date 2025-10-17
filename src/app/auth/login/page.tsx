@@ -1,6 +1,5 @@
 'use client';
 
-import Button from "@/components/common/Button";
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
 import { LoginRequest } from "@/components/forms/Types";
@@ -13,6 +12,23 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { LoginRequest as Payload } from "@/server/controllers/Types";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
+import NavLinksContainer from "@/components/containers/NavLinksContainer";
+import ActionsContainer from "@/components/containers/ActionsContainer";
+import FormHeader from "@/components/forms/FormHeader";
+
+const ACTION_LINKS: NavItemType[] = [
+    {
+        href: "/auth/register",
+        label: "New Account?",
+        icon: "user-round-plus"
+    },
+    {
+        href: "/auth/password-reset",
+        label: "Forgot Password?",
+        icon: "square-asterisk"
+    }
+]
 
 export default function Login() {
     const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: undefined, password: undefined, loginMethod: "EMAIL", phoneNumber: undefined, inputtedValue: undefined });
@@ -68,9 +84,7 @@ export default function Login() {
 
     return (
         <div className="flex flex-col gap-4 m-auto mt-32 p-8 items-center justify-center border border-gray-100 shadow-md rounded-md bg-[#FBFBFB] lg:w-1/3 md:w-2/3 sm:w-full">
-            <header className="flex flex-col gap-2 text-left w-full mx-4">
-                <h1 className="text-xl font-bold">Welcome back 👋</h1>
-            </header>
+            <FormHeader title="Welcome back 👋" />
             <form className="w-full flex flex-col gap-8" onSubmit={submitLoginRequest}>
                 <GridComponent cols={2} gap={24}>
                     <FormInput input={{
@@ -90,43 +104,11 @@ export default function Login() {
                         onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
                     }} />
                 </GridComponent>
-                <Button label="Login" type="submit" action="primary" icon="log-in" />
+                <PrimaryButton label="Login" type="submit" icon="log-in" isFullWidth />
             </form>
-            <ActionLinks />
+            <ActionsContainer>
+                <NavLinksContainer navLinks={ACTION_LINKS} />
+            </ActionsContainer>
         </div>
-    )
-}
-
-function ActionLinks() {
-    const actionLinks: NavItemType[] = [
-        {
-            href: "/auth/register",
-            label: "New Account?",
-            icon: "user-round-plus"
-        },
-        {
-            href: "/auth/password-reset",
-            label: "Forgot Password?",
-            icon: "square-asterisk"
-        }
-    ]
-
-    return (
-        <>
-            <footer className="w-full flex flex-col gap-4">
-                <hr className="border-t-2 border-gray-200 mt-2" />
-                <ul className="flex flex-row justify-between">
-                    {
-                        actionLinks.map((link, key) => {
-                            return (
-                                <li key={key}>
-                                    <NavItem navItem={link} />
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </footer>
-        </>
     )
 }
