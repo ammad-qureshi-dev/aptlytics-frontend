@@ -40,6 +40,7 @@ export default function Login() {
 
     const fetchMe = async () => {
         const response = await UserController.getMe();
+        console.log(response)
         if (response !== undefined && response !== null) {
             useUserStore.getState().setUser(response);
             useRoleStore.getState().setRole(response.lastSignedInAs || "CUSTOMER");
@@ -73,10 +74,11 @@ export default function Login() {
         e.preventDefault();
 
         const payload = generatePayload();
-        const response = await AuthController.login(payload);
+        const data = await AuthController.login(payload);
 
-        if (response.data !== null) {
+        if (data !== null) {
             const user = await fetchMe();
+            console.log(user);
             queryClient.invalidateQueries({ queryKey: ["user"] });
 
             if (user.verified) {
