@@ -3,7 +3,6 @@
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
 import { LoginRequest } from "@/components/forms/Types";
-import NavItem from "@/components/navigation/NavItem"
 import { NavItemType } from "@/components/navigation/Types"
 import { AuthController } from "@/server/controllers/AuthController";
 import { UserController } from "@/server/controllers/UserController";
@@ -16,6 +15,10 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import NavLinksContainer from "@/components/containers/NavLinksContainer";
 import ActionsContainer from "@/components/containers/ActionsContainer";
 import FormHeader from "@/components/forms/FormHeader";
+import PageContainer from "@/components/page/PageContainer";
+import PageHeader from "@/components/page/PageHeader";
+import PageContentContainer from "@/components/page/PageContentContainer";
+import FormContainer from "@/components/forms/FormContainer";
 
 const ACTION_LINKS: NavItemType[] = [
     {
@@ -83,32 +86,36 @@ export default function Login() {
     }
 
     return (
-        <div className="flex flex-col gap-4 m-auto mt-32 p-8 items-center justify-center border border-gray-100 shadow-md rounded-md bg-[#FBFBFB] lg:w-1/3 md:w-2/3 sm:w-full">
-            <FormHeader title="Welcome back 👋" />
-            <form className="w-full flex flex-col gap-8" onSubmit={submitLoginRequest}>
-                <GridComponent cols={2} gap={24}>
-                    <FormInput input={{
-                        label: "Email/Phone",
-                        inputType: "text",
-                        placeHolder: "Enter your email or phone number",
-                        value: loginRequest.inputtedValue,
-                        isRequired: true,
-                        onValueChange: (value) => setLoginRequest(prev => ({ ...prev, inputtedValue: value })),
-                    }} />
-                    <FormInput input={{
-                        label: "Password",
-                        inputType: "password",
-                        placeHolder: "super-secret-password",
-                        value: loginRequest.password,
-                        isRequired: true,
-                        onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
-                    }} />
-                </GridComponent>
-                <PrimaryButton label="Login" type="submit" icon="log-in" isFullWidth />
-            </form>
-            <ActionsContainer>
-                <NavLinksContainer navLinks={ACTION_LINKS} />
-            </ActionsContainer>
-        </div>
+        <>
+            <PageContainer width="lg:w-1/3 md:w-2/3 sm:w-full" css="mt-8">
+                <PageHeader title="Welcome Back 👋" />
+                <PageContentContainer>
+                    <FormContainer onSubmitFn={submitLoginRequest}>
+                        <GridComponent cols={2} gap={24}>
+                            <FormInput input={{
+                                label: "Email/Phone",
+                                inputType: "text",
+                                placeHolder: "Enter your email or phone number",
+                                value: loginRequest.inputtedValue,
+                                isRequired: true,
+                                onValueChange: (value) => setLoginRequest(prev => ({ ...prev, inputtedValue: value })),
+                            }} />
+                            <FormInput input={{
+                                label: "Password",
+                                inputType: "password",
+                                placeHolder: "super-secret-password",
+                                value: loginRequest.password,
+                                isRequired: true,
+                                onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
+                            }} />
+                        </GridComponent>
+                        <PrimaryButton label="Login" type="submit" icon="log-in" isFullWidth />
+                    </FormContainer>
+                    <ActionsContainer>
+                        <NavLinksContainer navLinks={ACTION_LINKS} />
+                    </ActionsContainer>
+                </PageContentContainer>
+            </PageContainer>
+        </>
     )
 }

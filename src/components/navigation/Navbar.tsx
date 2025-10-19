@@ -39,7 +39,7 @@ export default function Navbar() {
     });
 
     return (
-        <div className="flex flex-row justify-between items-center border border-gray-100 py-4 px-8 shadow-xs border-b-2">
+        <div className="w-full flex flex-row justify-between items-center border border-gray-100 py-4 px-8 shadow-xs border-b-2">
             <div className="flex flex-row">
                 <DefaultLogo />
                 {user && <NavbarActions />}

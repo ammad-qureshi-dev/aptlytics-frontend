@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable}`}
+        className={`${roboto.variable} flex flex-col items-center w-full`}
       >
         <QueryClientProvider client={queryClient}>
           <Navbar />

@@ -4,7 +4,7 @@ import PageHeader from "@/components/page/PageHeader";
 
 export default function VerifyAccount() {
     return (
-        <PageContainer>
+        <PageContainer css="mt-8">
             <PageHeader title="Verify Your Account" />
 
             <div className="flex flex-row w-1/2">

@@ -7,6 +7,7 @@ import { User } from "@/stores/Types";
 import { useQuery } from "@tanstack/react-query";
 import ProfileSwitcher from "@/components/profile/ProfileSwitcher";
 import SkeletonBox from "@/components/common/SkeletonBox";
+import PageContentContainer from "@/components/page/PageContentContainer";
 
 export default function Profile() {
     const fetchMe = async () => {
@@ -23,11 +24,11 @@ export default function Profile() {
     if (isError) return <p>Error: {error.message}</p>;
 
     return (
-        <PageContainer width="w-4/5">
+        <PageContainer>
             <PageHeader title={`Profile`} subTitle={`Hi ${data?.fullName}`} />
-            <div className="my-4">
+            <PageContentContainer>
                 <ProfileSwitcher showLogout showContinueButton={false} />
-            </div>
+            </PageContentContainer>
         </PageContainer>
     );
 }

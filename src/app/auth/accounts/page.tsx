@@ -5,7 +5,7 @@ import ProfileSwitcher from "@/components/profile/ProfileSwitcher";
 
 export default function Accounts() {
     return (
-        <PageContainer width="w-1/2">
+        <PageContainer width="w-1/2" css="mt-8">
             <PageHeader title="Accounts" subTitle="Here are the businesses you own and the jobs you work at. Select an account to continue." />
             <PageContentContainer>
                 <span className="font-light">Last logged in as:</span>
