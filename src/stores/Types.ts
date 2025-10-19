@@ -4,4 +4,5 @@ export type User = {
   phoneNumber: string;
   userId: string;
   lastSignedInAs: "OWNER" | "EMPLOYEE" | "CUSTOMER";
+  contextId: string;
 };

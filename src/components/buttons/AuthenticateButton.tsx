@@ -1,5 +1,5 @@
 import { usePathname } from "next/navigation";
-import LinkButton from "../common/LinkButton";
+import LinkButton from "./LinkButton";
 import { NavItemType } from "../navigation/Types";
 
 export default function AuthenticateButton() {

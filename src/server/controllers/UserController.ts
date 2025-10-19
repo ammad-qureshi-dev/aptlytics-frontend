@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { BaseController } from "./BaseController";
 import { ServiceResponse } from "./Types";
 
@@ -17,7 +18,7 @@ export class UserController extends BaseController {
   static async getUserProfiles() {
     const response = await BaseController.getResponse(
       BaseController.axiosInstance.get<ServiceResponse>(
-        BaseController.BACKEND_ENDPOINT_API + this.ENDPOINT + "/user-profiles"
+        BaseController.BACKEND_ENDPOINT_API + this.ENDPOINT + "/profiles"
       )
     );
 
@@ -34,5 +35,20 @@ export class UserController extends BaseController {
     );
 
     return response;
+  }
+
+  static async getCurrentProfile() {
+    const response = await BaseController.getResponse(
+      BaseController.axiosInstance.get<ServiceResponse>(
+        `http://localhost:8080/api/v1/user/profiles/current`
+      )
+    );
+
+    if (response?.data) {
+      return response.data;
+    }
+
+    console.error(response);
+    toast.error("Something went wrong retrieving current profile");
   }
 }

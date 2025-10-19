@@ -1,23 +1,29 @@
-import DisplayCard from "./DisplayCard"
-import { PageCardType } from "./Types"
+import DisplayCard from "./DisplayCard";
+import { PageCardType } from "./Types";
 
 interface DisplayCardContainerProp {
-    cards: PageCardType[]
+    cards: PageCardType[];
 }
 
 export default function DisplayCardContainer({ cards }: DisplayCardContainerProp) {
     return (
         <div
             id="display-card-container"
-            className={`w-full gap-2
-    ${cards.length > 4
-                    ? "grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1"
-                    : "flex flex-row "}`
-            }
+            className={`
+        w-full
+        flex flex-col md:flex-row sm:flex-row
+        flex-wrap md:flex-nowrap sm:flex-nowrap
+        gap-6
+        items-stretch
+        justify-start
+        transition-all duration-200 ease-in-out
+        py-4
+        hover:cursor-pointer
+      `}
         >
-            {cards.map((card, key) => (
-                <DisplayCard card={card} key={key} />
+            {cards.map((card, index) => (
+                <DisplayCard card={card} key={index} />
             ))}
         </div>
-    )
+    );
 }

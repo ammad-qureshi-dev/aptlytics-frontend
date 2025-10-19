@@ -1,6 +1,6 @@
 import DisplayCardContainer from "@/components/cards/DisplayCardContainer";
 import { PageCardType } from "@/components/cards/Types";
-import LinkButton from "@/components/common/LinkButton";
+import LinkButton from "@/components/buttons/LinkButton";
 import CustomerSearch from "@/components/CustomerSearch";
 import { NavItemType } from "@/components/navigation/Types";
 

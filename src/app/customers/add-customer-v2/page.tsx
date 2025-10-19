@@ -1,6 +1,7 @@
 "use client";
 
-import Button from "@/components/common/Button";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
+import SecondaryButton from "@/components/buttons/SecondaryButton";
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm";
 import { AddCustomerRequest } from "@/components/forms/Types";
@@ -68,8 +69,8 @@ export default function AddCustomerV2() {
                         }} />
                     </GridComponent>
                     <div id="action-center" className="flex flex-row gap-4 justify-start">
-                        <Button label="Cancel" type="button" action="secondary" icon="ban" />
-                        <Button label="Add" type="button" action="primary" icon="user-plus" onClick={submitCustomerForm} />
+                        <SecondaryButton label="Cancel" type="button" />
+                        <PrimaryButton label="Add" type="button" icon="user-plus" onClick={submitCustomerForm} />
                     </div>
                 </form>
             </div>

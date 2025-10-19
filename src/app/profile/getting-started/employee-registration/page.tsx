@@ -2,12 +2,12 @@ import PageContainer from "@/components/page/PageContainer";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import PageHeader from "@/components/page/PageHeader";
 
-export default function Dashboard() {
+export default function EmployeeRegistration() {
     return (
         <PageContainer>
-            <PageHeader title="Your Dasboard" subTitle="Check out what's happening!" />
+            <PageHeader title="Add Your Employment" subTitle="Add your work schedule or appointments and get automated reminders" />
             <PageContentContainer>
-                <span>Hi</span>
+                hi
             </PageContentContainer>
         </PageContainer>
     )

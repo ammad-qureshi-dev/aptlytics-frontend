@@ -1,10 +1,8 @@
 'use client';
 
-import Button from "@/components/common/Button";
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
 import { LoginRequest } from "@/components/forms/Types";
-import NavItem from "@/components/navigation/NavItem"
 import { NavItemType } from "@/components/navigation/Types"
 import { AuthController } from "@/server/controllers/AuthController";
 import { UserController } from "@/server/controllers/UserController";
@@ -13,6 +11,27 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { LoginRequest as Payload } from "@/server/controllers/Types";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
+import NavLinksContainer from "@/components/containers/NavLinksContainer";
+import ActionsContainer from "@/components/containers/ActionsContainer";
+import PageContainer from "@/components/page/PageContainer";
+import PageHeader from "@/components/page/PageHeader";
+import PageContentContainer from "@/components/page/PageContentContainer";
+import FormContainer from "@/components/forms/FormContainer";
+import { useRoleStore } from "@/stores/RoleStore";
+
+const ACTION_LINKS: NavItemType[] = [
+    {
+        href: "/auth/register",
+        label: "New Account?",
+        icon: "user-round-plus"
+    },
+    {
+        href: "/auth/password-reset",
+        label: "Forgot Password?",
+        icon: "square-asterisk"
+    }
+]
 
 export default function Login() {
     const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: undefined, password: undefined, loginMethod: "EMAIL", phoneNumber: undefined, inputtedValue: undefined });
@@ -23,21 +42,20 @@ export default function Login() {
         const response = await UserController.getMe();
         if (response !== undefined && response !== null) {
             useUserStore.getState().setUser(response);
+            useRoleStore.getState().setRole(response.lastSignedInAs || "CUSTOMER");
             return response;
         }
         return null;
     };
 
-    const submitLoginRequest = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const generatePayload = (): Payload => {
         const request = { ...loginRequest };
 
         const payload: Payload = {
             "email": undefined,
             "phoneNumber": undefined,
             "loginMethod": undefined,
-            "password": undefined
+            "password": request.password
         }
 
         if (request?.inputtedValue?.includes("@")) {
@@ -48,8 +66,13 @@ export default function Login() {
             payload.phoneNumber = request.inputtedValue;
         }
 
-        payload.password = request.password;
+        return payload;
+    }
 
+    const submitLoginRequest = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const payload = generatePayload();
         const response = await AuthController.login(payload);
 
         if (response.data !== null) {
@@ -67,66 +90,36 @@ export default function Login() {
     }
 
     return (
-        <div className="flex flex-col gap-4 m-auto mt-32 p-8 items-center justify-center border border-gray-100 shadow-md rounded-md bg-[#FBFBFB] lg:w-1/3 md:w-2/3 sm:w-full">
-            <header className="flex flex-col gap-2 text-left w-full mx-4">
-                <h1 className="text-xl font-bold">Welcome back 👋</h1>
-            </header>
-            <form className="w-full flex flex-col gap-8" onSubmit={submitLoginRequest}>
-                <GridComponent cols={2} gap={24}>
-                    <FormInput input={{
-                        label: "Email/Phone",
-                        inputType: "text",
-                        placeHolder: "Enter your email or phone number",
-                        value: loginRequest.inputtedValue,
-                        isRequired: true,
-                        onValueChange: (value) => setLoginRequest(prev => ({ ...prev, inputtedValue: value })),
-                    }} />
-                    <FormInput input={{
-                        label: "Password",
-                        inputType: "password",
-                        placeHolder: "super-secret-password",
-                        value: loginRequest.password,
-                        isRequired: true,
-                        onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
-                    }} />
-                </GridComponent>
-                <Button label="Login" type="submit" action="primary" icon="log-in" />
-            </form>
-            <ActionLinks />
-        </div>
-    )
-}
-
-function ActionLinks() {
-    const actionLinks: NavItemType[] = [
-        {
-            href: "/auth/register",
-            label: "New Account?",
-            icon: "user-round-plus"
-        },
-        {
-            href: "/auth/password-reset",
-            label: "Forgot Password?",
-            icon: "square-asterisk"
-        }
-    ]
-
-    return (
         <>
-            <footer className="w-full flex flex-col gap-4">
-                <hr className="border-t-2 border-gray-200 mt-2" />
-                <ul className="flex flex-row justify-between">
-                    {
-                        actionLinks.map((link, key) => {
-                            return (
-                                <li key={key}>
-                                    <NavItem navItem={link} />
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </footer>
+            <PageContainer width="lg:w-1/3 md:w-2/3 sm:w-full" css="mt-8">
+                <PageHeader title="Welcome Back 👋" />
+                <PageContentContainer>
+                    <FormContainer onSubmitFn={submitLoginRequest}>
+                        <GridComponent cols={2} gap={24}>
+                            <FormInput input={{
+                                label: "Email/Phone",
+                                inputType: "text",
+                                placeHolder: "Enter your email or phone number",
+                                value: loginRequest.inputtedValue,
+                                isRequired: true,
+                                onValueChange: (value) => setLoginRequest(prev => ({ ...prev, inputtedValue: value })),
+                            }} />
+                            <FormInput input={{
+                                label: "Password",
+                                inputType: "password",
+                                placeHolder: "super-secret-password",
+                                value: loginRequest.password,
+                                isRequired: true,
+                                onValueChange: (value) => setLoginRequest(prev => ({ ...prev, password: value })),
+                            }} />
+                        </GridComponent>
+                        <PrimaryButton label="Login" type="submit" icon="log-in" isFullWidth />
+                    </FormContainer>
+                    <ActionsContainer>
+                        <NavLinksContainer navLinks={ACTION_LINKS} />
+                    </ActionsContainer>
+                </PageContentContainer>
+            </PageContainer>
         </>
     )
 }

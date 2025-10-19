@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/common/Button";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
 import PageContainer from "@/components/page/PageContainer";
 import PageHeader from "@/components/page/PageHeader";
 import { AuthController } from "@/server/controllers/AuthController";
@@ -30,7 +30,7 @@ export default function VerifyAccount() {
         <PageContainer>
             <PageHeader title="Account Verification" subTitle="Please verify your account" />
             <div className="my-4">
-                <Button label="Verify" type="button" action="primary" onClick={verify} icon="shield-check" />
+                <PrimaryButton label="Verify" type="button" onClick={verify} icon="shield-check" />
             </div>
         </PageContainer>
     )
