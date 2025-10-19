@@ -48,16 +48,14 @@ export default function Login() {
         return null;
     };
 
-    const submitLoginRequest = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const generatePayload = (): Payload => {
         const request = { ...loginRequest };
 
         const payload: Payload = {
             "email": undefined,
             "phoneNumber": undefined,
             "loginMethod": undefined,
-            "password": undefined
+            "password": request.password
         }
 
         if (request?.inputtedValue?.includes("@")) {
@@ -68,8 +66,13 @@ export default function Login() {
             payload.phoneNumber = request.inputtedValue;
         }
 
-        payload.password = request.password;
+        return payload;
+    }
 
+    const submitLoginRequest = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const payload = generatePayload();
         const response = await AuthController.login(payload);
 
         if (response.data !== null) {
