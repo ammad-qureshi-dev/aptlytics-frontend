@@ -1,3 +1,16 @@
+export function getTextColorBasedOnRole(role: string) {
+  switch (role) {
+    case "CUSTOMER":
+      return "text-indigo-400";
+    case "EMPLOYEE":
+      return "text-green-400";
+    case "OWNER":
+      return "text-yellow-400";
+    default:
+      return "text-gray-400";
+  }
+}
+
 export function getIconColor(iconColor: string | undefined) {
   if (!iconColor) {
     return "text-black";
@@ -16,6 +29,25 @@ export function getIconColor(iconColor: string | undefined) {
       return "text-orange-500";
     default:
       return "text-black";
+  }
+}
+
+export function getPillColor(color: string) {
+  switch (color.toLowerCase()) {
+    case "red":
+      return "bg-red-100 text-red-800";
+    case "blue":
+      return "bg-blue-100 text-blue-800";
+    case "green":
+      return "bg-green-100 text-green-800";
+    case "yellow":
+      return "bg-yellow-100 text-yellow-800";
+    case "purple":
+      return "bg-purple-100 text-purple-800";
+    case "orange":
+      return "bg-orange-100 text-orange-800";
+    default:
+      return "bg-gray-100 text-gray-800";
   }
 }
 
@@ -62,5 +94,18 @@ export function getColorByAlertType(type: string | undefined) {
       return "green";
     default:
       return "black";
+  }
+}
+
+export function getRoleColor(role: string) {
+  switch (role) {
+    case "CUSTOMER":
+      return "blue";
+    case "EMPLOYEE":
+      return "green";
+    case "OWNER":
+      return "yellow";
+    default:
+      return "gray";
   }
 }

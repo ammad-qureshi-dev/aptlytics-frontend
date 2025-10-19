@@ -5,6 +5,7 @@ import { UserController } from "@/server/controllers/UserController";
 import { UserIcon, SquareArrowOutUpRight, EllipsisVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Pill from "../common/Pill";
+import { getRoleColor } from "@/utils/IconUtils";
 
 interface AccountCardProps {
     profile: UserProfile;
@@ -55,15 +56,3 @@ export default function AccountCard({ profile }: AccountCardProps) {
     );
 }
 
-function getRoleColor(role: string) {
-    switch (role) {
-        case "CUSTOMER":
-            return "indigo";
-        case "EMPLOYEE":
-            return "green";
-        case "OWNER":
-            return "yellow";
-        default:
-            return "gray";
-    }
-}

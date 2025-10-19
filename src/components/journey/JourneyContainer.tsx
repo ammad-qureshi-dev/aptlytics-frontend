@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { JourneyComponents } from "./journeys/add-customer-journey/AddCustomerJourneyConfig";
 import JourneyStepper from "./JourneyStepper";
-import Button from "../common/Button";
 import JourneyStepContainer from "./JourneyStepContainer";
 import { Journeys } from "./JourneyConfig";
 import { RemoteCall } from "@/server/JourneyRemoteCall";

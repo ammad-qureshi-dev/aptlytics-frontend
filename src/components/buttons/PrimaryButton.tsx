@@ -1,5 +1,5 @@
 import { DynamicIcon } from "lucide-react/dynamic";
-import { IconName } from "../common/Button";
+import { IconName } from "../navigation/Types";
 
 interface Prop {
     label: string;
@@ -15,9 +15,8 @@ export default function PrimaryButton({ label, onClick, icon, isFullWidth, type 
             type={type}
             onClick={onClick}
             className={`
-                ${isFullWidth ? "w-full" : "w-36"} 
+                ${isFullWidth ? "w-full" : "w-36"} h-12
                 border
-                h-12
                 py-2 px-4
                 flex flex-row
                 justify-center items-center gap-2
@@ -32,7 +31,11 @@ export default function PrimaryButton({ label, onClick, icon, isFullWidth, type 
                 hover:bg-[#f77700]
                 active:-translate-y-1
                 `}>
-            <DynamicIcon name={icon || "hammer"} size={24} />
+            {
+                icon &&
+                <DynamicIcon name={icon} size={24} />
+
+            }
             <span className="text-xl font-medium">{label}</span>
         </button>
     )

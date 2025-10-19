@@ -3,6 +3,7 @@
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import PageContainer from "@/components/page/PageContainer";
+import ProfileSwitcher from "@/components/profile/ProfileSwitcher";
 
 export default function TestPage() {
 
@@ -12,10 +13,7 @@ export default function TestPage() {
 
     return (
         <PageContainer>
-            <div className="flex flex-row gap-4">
-                <PrimaryButton label="Add" onClick={onClick} icon="user-plus" />
-                <SecondaryButton label="Cancel" onClick={onClick} />
-            </div>
+            <ProfileSwitcher />
         </PageContainer>
     )
 }
