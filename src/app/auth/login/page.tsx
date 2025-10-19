@@ -14,11 +14,11 @@ import { LoginRequest as Payload } from "@/server/controllers/Types";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import NavLinksContainer from "@/components/containers/NavLinksContainer";
 import ActionsContainer from "@/components/containers/ActionsContainer";
-import FormHeader from "@/components/forms/FormHeader";
 import PageContainer from "@/components/page/PageContainer";
 import PageHeader from "@/components/page/PageHeader";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import FormContainer from "@/components/forms/FormContainer";
+import { useRoleStore } from "@/stores/RoleStore";
 
 const ACTION_LINKS: NavItemType[] = [
     {
@@ -42,6 +42,7 @@ export default function Login() {
         const response = await UserController.getMe();
         if (response !== undefined && response !== null) {
             useUserStore.getState().setUser(response);
+            useRoleStore.getState().setRole(response.lastSignedInAs || "CUSTOMER");
             return response;
         }
         return null;

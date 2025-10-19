@@ -4,19 +4,28 @@ import { useQueryClient } from "@tanstack/react-query";
 import { CircleCheck } from "lucide-react";
 import Pill from "../common/Pill";
 import { getRoleColor } from "@/utils/IconUtils";
+import { useRoleStore } from "@/stores/RoleStore";
 
 interface ProfileProp {
     profile: UserProfile;
     currentProfile: boolean;
+    refreshOnSelect: boolean;
 }
 
-export default function Profile({ profile, currentProfile }: ProfileProp) {
+export default function Profile({ profile, currentProfile, refreshOnSelect }: ProfileProp) {
 
     const queryClient = useQueryClient();
+    const roleStore = useRoleStore();
 
     const selectProfile = async () => {
         await UserController.switchProfile(profile.contextId, profile.role);
         queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
+        queryClient.invalidateQueries({ queryKey: ["role"] });
+        roleStore.setRole(profile.role);
+
+        if (refreshOnSelect) {
+            window.location.reload();
+        }
     }
 
     return (

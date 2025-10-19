@@ -8,9 +8,10 @@ import LogoutOption from "./LogoutOption";
 interface Prop {
     contextId?: string
     children?: React.ReactNode
+    refreshOnSelect: boolean;
 }
 
-export default function ProfileSelector({ contextId, children }: Prop) {
+export default function ProfileSelector({ contextId, refreshOnSelect, children }: Prop) {
     const {
         data: profiles = [],
         isLoading,
@@ -51,7 +52,7 @@ export default function ProfileSelector({ contextId, children }: Prop) {
                 {
                     profiles.map((profile, key) => {
                         return (
-                            <Profile profile={profile} key={key} currentProfile={profile.contextId === contextId} />
+                            <Profile profile={profile} key={key} currentProfile={profile.contextId === contextId} refreshOnSelect={refreshOnSelect} />
                         )
                     })
                 }

@@ -14,9 +14,12 @@ import PrimaryButton from "../buttons/PrimaryButton";
 interface Prop {
     showLogout: boolean;
     showContinueButton: boolean;
+
+    // FIXME: I don't like this
+    refreshOnSelect: boolean;
 }
 
-export default function ProfileSwitcher({ showLogout, showContinueButton }: Prop) {
+export default function ProfileSwitcher({ showLogout, showContinueButton, refreshOnSelect }: Prop) {
     const [showProfiles, setShowProfiles] = useState<boolean>(false);
     const { data: currentProfile, isLoading, isError, error, refetch } = useQuery<UserProfile>({
         queryKey: ["currentProfile"],
@@ -42,7 +45,7 @@ export default function ProfileSwitcher({ showLogout, showContinueButton }: Prop
                 <CurrentSelectedProfile profile={currentProfile} onClick={setShowProfiles} showProfiles={showProfiles} />
                 {
                     showProfiles &&
-                    <ProfileSelector contextId={currentProfile?.contextId}>
+                    <ProfileSelector contextId={currentProfile?.contextId} refreshOnSelect={refreshOnSelect}>
                         {
                             showLogout &&
                             <LogoutOption />

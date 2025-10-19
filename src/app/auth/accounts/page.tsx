@@ -9,7 +9,7 @@ export default function Accounts() {
             <PageHeader title="Accounts" subTitle="Here are the businesses you own and the jobs you work at. Select an account to continue." />
             <PageContentContainer>
                 <span className="font-light">Last logged in as:</span>
-                <ProfileSwitcher showLogout={false} showContinueButton />
+                <ProfileSwitcher showLogout={false} showContinueButton refreshOnSelect={false} />
             </PageContentContainer>
         </PageContainer>
     );

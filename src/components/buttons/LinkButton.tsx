@@ -1,11 +1,9 @@
-// 'use client';
-
 import { DynamicIcon } from "lucide-react/dynamic";
 import { DefaultIconName, NavItemType } from "../navigation/Types";
 import Link from "next/link";
 
 interface LinkButtonProp {
-    item: NavItemType
+    item: NavItemType;
 }
 
 export default function LinkButton({ item }: LinkButtonProp) {

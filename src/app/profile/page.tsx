@@ -27,7 +27,7 @@ export default function Profile() {
         <PageContainer>
             <PageHeader title={`Profile`} subTitle={`Hi ${data?.fullName}`} />
             <PageContentContainer>
-                <ProfileSwitcher showLogout showContinueButton={false} />
+                <ProfileSwitcher showLogout showContinueButton={false} refreshOnSelect={false} />
             </PageContentContainer>
         </PageContainer>
     );

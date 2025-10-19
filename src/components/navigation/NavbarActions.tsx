@@ -1,35 +1,11 @@
 import NavItem from "./NavItem"
 import { NavItemType } from "./Types"
 
-export default function NavbarActions() {
-    const navItems: NavItemType[] = [
-        {
-            href: "/appointments",
-            label: "Appointments",
-            icon: "clipboard-clock"
-        },
-        {
-            href: "/business",
-            label: "Business",
-            icon: "store"
-        },
-        {
-            href: "/customers",
-            label: "Customers",
-            icon: "users-round"
-        },
-        {
-            href: "/dashboard",
-            label: "Dashboard",
-            icon: "layout-dashboard",
-        },
-        {
-            href: "/team",
-            label: "Team",
-            icon: "boxes",
-        }
-    ]
+interface Prop {
+    navItems: NavItemType[];
+}
 
+export default function NavbarActions({ navItems }: Prop) {
     return (
         <div>
             <ul id="action-navbar" className="hidden lg:flex flex-row gap-8 w-fit mx-4">
