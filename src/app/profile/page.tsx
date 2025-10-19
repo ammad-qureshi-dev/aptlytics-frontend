@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import ProfileSwitcher from "@/components/profile/ProfileSwitcher";
 import SkeletonBox from "@/components/common/SkeletonBox";
 import PageContentContainer from "@/components/page/PageContentContainer";
+import Link from "next/link";
 
 export default function Profile() {
     const fetchMe = async () => {
@@ -28,6 +29,14 @@ export default function Profile() {
             <PageHeader title={`Profile`} subTitle={`Hi ${data?.fullName}`} />
             <PageContentContainer>
                 <ProfileSwitcher showLogout showContinueButton={false} refreshOnSelect={false} />
+                <Link href="/profile/getting-started">
+                    <span className="flex flex-row gap-1">
+                        Want to add your business or job appointments?
+                        <span className="text-[#FF7B00]">
+                            <h6> Click here!</h6>
+                        </span>
+                    </span>
+                </Link>
             </PageContentContainer>
         </PageContainer>
     );

@@ -10,4 +10,5 @@ export type PageCardType = {
   iconSize?: number;
   data: any;
   extra?: any;
+  redirectTo?: string;
 };

@@ -5,7 +5,7 @@ interface Prop {
 export default function PageContentContainer({ children }: Prop) {
     return (
         <>
-            <div id="page-content-container" className="flex flex-col gap-2 my-4">
+            <div id="page-content-container" className="flex flex-col gap-4 my-4">
                 {children}
             </div>
         </>
