@@ -6,7 +6,7 @@ import { UserController } from "@/server/controllers/UserController";
 import { User } from "@/stores/Types";
 import { useQuery } from "@tanstack/react-query";
 import ProfileSwitcher from "@/components/profile/ProfileSwitcher";
-import SkeletonBox from "@/components/common/SkeletonBox";
+import SkeletonBox from "@/components/loading/SkeletonBox";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import Link from "next/link";
 
@@ -21,22 +21,30 @@ export default function Profile() {
         queryFn: fetchMe
     });
 
-    if (isLoading) return <SkeletonBox width="w-full" height="w-full" />;
     if (isError) return <p>Error: {error.message}</p>;
 
     return (
         <PageContainer>
             <PageHeader title={`Profile`} subTitle={`Hi ${data?.fullName}`} />
             <PageContentContainer>
-                <ProfileSwitcher showLogout showContinueButton={false} refreshOnSelect={false} />
-                <Link href="/profile/getting-started">
-                    <span className="flex flex-row gap-1">
-                        Want to add your business or job appointments?
-                        <span className="text-[#FF7B00]">
-                            <h6> Click here!</h6>
-                        </span>
-                    </span>
-                </Link>
+                {
+                    isLoading &&
+                    <SkeletonBox width="w-full" height="w-full" />
+                }
+                {
+                    data &&
+                    <>
+                        <ProfileSwitcher showLogout showContinueButton={false} refreshOnSelect={false} />
+                        <Link href="/getting-started">
+                            <span className="flex flex-row gap-1">
+                                Want to add your business or job appointments?
+                                <span className="text-[#FF7B00]">
+                                    <h6> Click here!</h6>
+                                </span>
+                            </span>
+                        </Link>
+                    </>
+                }
             </PageContentContainer>
         </PageContainer>
     );

@@ -4,7 +4,7 @@ import { UserProfile } from "@/server/controllers/Types";
 import { UserController } from "@/server/controllers/UserController";
 import { useQuery } from "@tanstack/react-query";
 import CurrentSelectedProfile from "./CurrentSelectedProfile";
-import SkeletonBox from "../common/SkeletonBox";
+import SkeletonBox from "../loading/SkeletonBox";
 import ProfileSelector from "./ProfileSelector";
 import { useState } from "react";
 import LogoutOption from "./LogoutOption";

@@ -2,7 +2,7 @@ import { UserProfile } from "@/server/controllers/Types";
 import { UserController } from "@/server/controllers/UserController";
 import { useQuery } from "@tanstack/react-query";
 import Profile from "./Profile";
-import SkeletonBox from "../common/SkeletonBox";
+import SkeletonBox from "../loading/SkeletonBox";
 import LogoutOption from "./LogoutOption";
 
 interface Prop {

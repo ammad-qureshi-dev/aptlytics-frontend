@@ -21,7 +21,7 @@ export class BaseController {
       (error: AxiosError) => {
         const status = error.response?.status;
         const url = error.config?.url;
-        console.log(url);
+
         // Only redirect on 401 if NOT /login or /signup
         if (
           status === 401 &&

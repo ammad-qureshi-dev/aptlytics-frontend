@@ -45,7 +45,7 @@ export default function Login() {
             return redirect;
         }
 
-        if (user.isVerified) {
+        if (user.verified) {
             return "/auth/accounts";
         }
 
@@ -54,7 +54,6 @@ export default function Login() {
 
     const fetchMe = async () => {
         const response = await UserController.getMe();
-        console.log(response)
         if (response !== undefined && response !== null) {
             useUserStore.getState().setUser(response);
             useRoleStore.getState().setRole(response.lastSignedInAs || "CUSTOMER");
@@ -92,7 +91,6 @@ export default function Login() {
 
         if (data !== null) {
             const user = await fetchMe();
-            console.log(user);
             queryClient.invalidateQueries({ queryKey: ["user"] });
             router.push(getNextLink(user));
         }
