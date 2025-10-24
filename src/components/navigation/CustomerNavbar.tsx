@@ -11,6 +11,16 @@ const navItems: NavItemType[] = [
         href: "/dashboard",
         label: "Dashboard",
         icon: "layout-dashboard",
+    },
+    {
+        href: "/explore",
+        label: "Explore",
+        icon: "globe",
+    },
+    {
+        href: "/getting-started",
+        label: "Get Started",
+        icon: "chart-no-axes-combined",
     }
 ];
 

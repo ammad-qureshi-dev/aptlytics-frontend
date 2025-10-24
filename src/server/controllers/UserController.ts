@@ -47,8 +47,5 @@ export class UserController extends BaseController {
     if (response?.data) {
       return response.data;
     }
-
-    console.error(response);
-    toast.error("Something went wrong retrieving current profile");
   }
 }

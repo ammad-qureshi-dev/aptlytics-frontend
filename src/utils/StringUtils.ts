@@ -27,3 +27,13 @@ export function stringFormat(
     }
   });
 }
+
+export function capitalizeString(s: string) {
+  if (!s) {
+    return "";
+  }
+
+  let _s = s;
+  _s = _s.toLowerCase();
+  return _s.charAt(0).toUpperCase() + _s.substring(1);
+}

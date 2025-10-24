@@ -1,4 +1,3 @@
-import DisplayCard from "@/components/cards/DisplayCard";
 import DisplayCardContainer from "@/components/cards/DisplayCardContainer";
 import { PageCardType } from "@/components/cards/Types";
 import PageContainer from "@/components/page/PageContainer";
@@ -14,7 +13,7 @@ const INFO_CARDS: PageCardType[] = [
         iconSize: undefined,
         data: "Business",
         extra: "Add your services, keep track of clients, automate CRM",
-        redirectTo: "/profile/getting-started/business-registration"
+        redirectTo: "/getting-started/business-registration"
     },
     {
         title: "",
@@ -24,7 +23,7 @@ const INFO_CARDS: PageCardType[] = [
         iconSize: undefined,
         data: "Employment",
         extra: "Add your work schedules and view your income statements",
-        redirectTo: "/profile/getting-started/employee-registration"
+        redirectTo: "/getting-started/employee-registration"
     },
     {
         title: "",

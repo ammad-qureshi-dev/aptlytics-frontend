@@ -32,3 +32,12 @@ export type UserProfile = {
   role: "CUSTOMER" | "EMPLOYEE" | "OWNER";
   contextId: string;
 };
+
+export type CommsRequest = {
+  commsType: "PHONE" | "EMAIL";
+  data?: any;
+  recipient: string;
+  subject: string;
+  messageContent?: string;
+  sendAt?: Date;
+};

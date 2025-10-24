@@ -36,15 +36,13 @@ export class AuthController extends BaseController {
     return response;
   }
 
-  static async verifyAccount(userId: string, contactMethod: string) {
+  static async verifyAccount(userId: string) {
     const response = await BaseController.getResponse(
       BaseController.axiosInstance.post<ServiceResponse>(
         BaseController.BACKEND_ENDPOINT_API +
           this.ENDPOINT +
           "/verify-account/" +
-          userId +
-          "?method=" +
-          contactMethod
+          userId
       )
     );
 

@@ -8,7 +8,7 @@ import { AuthController } from "@/server/controllers/AuthController";
 import { UserController } from "@/server/controllers/UserController";
 import { useUserStore } from "@/stores/UserStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { LoginRequest as Payload } from "@/server/controllers/Types";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
@@ -31,12 +31,26 @@ const ACTION_LINKS: NavItemType[] = [
         label: "Forgot Password?",
         icon: "square-asterisk"
     }
-]
+];
 
 export default function Login() {
     const [loginRequest, setLoginRequest] = useState<LoginRequest>({ email: undefined, password: undefined, loginMethod: "EMAIL", phoneNumber: undefined, inputtedValue: undefined });
     const router = useRouter();
     const queryClient = useQueryClient();
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect");
+
+    const getNextLink = (user: any) => {
+        if (redirect) {
+            return redirect;
+        }
+
+        if (user.isVerified) {
+            return "/auth/accounts";
+        }
+
+        return "/auth/verify-account";
+    }
 
     const fetchMe = async () => {
         const response = await UserController.getMe();
@@ -80,14 +94,7 @@ export default function Login() {
             const user = await fetchMe();
             console.log(user);
             queryClient.invalidateQueries({ queryKey: ["user"] });
-
-            if (user.verified) {
-                router.push("/auth/accounts");
-                return;
-            } else {
-                router.push("/auth/verify-account")
-                return;
-            }
+            router.push(getNextLink(user));
         }
     }
 

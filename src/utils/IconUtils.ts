@@ -1,13 +1,13 @@
 export function getTextColorBasedOnRole(role: string) {
   switch (role) {
     case "CUSTOMER":
-      return "text-indigo-400";
+      return "text-indigo-500";
     case "EMPLOYEE":
-      return "text-green-400";
+      return "text-green-500";
     case "OWNER":
-      return "text-yellow-400";
+      return "text-yellow-500";
     default:
-      return "text-gray-400";
+      return "text-gray-500";
   }
 }
 

@@ -7,9 +7,10 @@ import { useRouter } from "next/navigation";
 
 interface PageCardProp {
     card: PageCardType;
+    height?: string;
 }
 
-export default function DisplayCard({ card }: PageCardProp) {
+export default function DisplayCard({ card, height = "h-48" }: PageCardProp) {
 
     const router = useRouter();
 
@@ -27,9 +28,9 @@ export default function DisplayCard({ card }: PageCardProp) {
         <>
             <div
                 id="display-card"
-                className="
+                className={`
                 w-full
-                h-48
+                ${height}
                 flex flex-row
                 items-center
                 justify-between
@@ -44,7 +45,7 @@ export default function DisplayCard({ card }: PageCardProp) {
                 cursor-pointer
                 hover:-translate-y-1
                 hover:shadow-lg
-                hover:scale-[1.02]"
+                hover:scale-[1.02]`}
                 onClick={cardRedirectTo}
             >
 
@@ -63,9 +64,7 @@ export default function DisplayCard({ card }: PageCardProp) {
                         </div>
                     </div>
                 </div>
-
             </div>
         </>
-
     )
 }
