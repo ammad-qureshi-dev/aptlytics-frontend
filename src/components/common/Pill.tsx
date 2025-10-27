@@ -8,6 +8,12 @@ interface PillProp {
 }
 
 export default function Pill({ text, color }: PillProp) {
+
+    if (!text) {
+        console.error("No Text Proivded for Pill: " + text);
+        throw new Error("No Text Proivded for Pill");
+    }
+
     return (
         <div
             className={`

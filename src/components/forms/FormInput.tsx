@@ -13,14 +13,22 @@ export default function FormInput({ input }: FormInputProp) {
                     <span className="text-red-500">*</span>
                 }
             </p>
-            <input
-                className="border border-gray-200 bg-white py-2 px-4 rounded-sm w-full h-12"
-                type={input.inputType}
-                placeholder={input?.placeHolder}
-                onChange={(e) => input.onValueChange(e.target.value)}
-                value={input.value ?? ""}
-                required={input.isRequired}
-            />
+
+            {
+                input.inputType === "textarea" &&
+                <textarea name="" id="" required={input.isRequired} value={input.value ?? ""} placeholder={input?.placeHolder} onChange={(e) => input.onValueChange(e.target.value)} className="border border-gray-200 bg-white py-2 px-4 rounded-sm w-full h-12"></textarea>
+            }
+            {
+                input.inputType !== "textarea" &&
+                <input
+                    className="border border-gray-200 bg-white py-2 px-4 rounded-sm w-full h-12"
+                    type={input.inputType}
+                    placeholder={input?.placeHolder}
+                    onChange={(e) => input.onValueChange(e.target.value)}
+                    value={input.value ?? ""}
+                    required={input.isRequired}
+                />
+            }
         </div>
     )
 }

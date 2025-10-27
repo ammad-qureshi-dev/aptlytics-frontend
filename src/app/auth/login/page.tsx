@@ -45,11 +45,15 @@ export default function Login() {
             return redirect;
         }
 
-        if (user.verified) {
-            return "/auth/accounts";
+        if (user) {
+            if (user!.verified) {
+                return "/auth/accounts";
+            }
+
+            return "/auth/verify-account";
         }
 
-        return "/auth/verify-account";
+        return "";
     }
 
     const fetchMe = async () => {

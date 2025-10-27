@@ -32,7 +32,7 @@ export default function Register() {
         const response = await AuthController.register(registerRequest);
 
         if (response.success && response.data) {
-            router.push("/dashboard")
+            router.push("/auth/verify-account")
         }
     }
 

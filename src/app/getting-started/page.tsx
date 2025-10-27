@@ -21,7 +21,7 @@ const INFO_CARDS: PageCardType[] = [
         iconSize: undefined,
         data: "Business",
         extra: "Add your services, keep track of clients, automate CRM",
-        redirectTo: "/getting-started/business-registration"
+        redirectTo: "/business/registration"
     },
     {
         title: "",

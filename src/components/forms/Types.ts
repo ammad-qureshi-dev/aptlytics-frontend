@@ -37,3 +37,11 @@ export type AddCustomerRequest = {
   phoneNumber: string | undefined;
   fullName: string | undefined;
 };
+
+export type RegisterBusinessRequest = {
+  name: string;
+  address?: string;
+  phoneNumber?: string;
+  email?: string;
+  description?: string;
+};

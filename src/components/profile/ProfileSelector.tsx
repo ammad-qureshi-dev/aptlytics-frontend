@@ -39,14 +39,16 @@ export default function ProfileSelector({ contextId, refreshOnSelect, children }
             <div
                 id="profile-swticher"
                 className="
-                flex flex-col
-                bg-white
-                rounded-md
-                border-1
-                border-gray-50
-                shadow-sm
-                p-2
-                gap-2
+flex flex-col
+  bg-white
+  rounded-md
+  border border-gray-50
+  shadow-sm
+  p-2
+  gap-2
+  min-h-fit
+  max-h-48
+  overflow-y-scroll
                 "
             >
                 {

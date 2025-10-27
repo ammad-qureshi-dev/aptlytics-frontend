@@ -26,7 +26,7 @@ export default function ProfileSwitcher({ showLogout, showContinueButton, refres
         queryFn: UserController.getCurrentProfile
     });
 
-    if (isLoading) return <SkeletonBox width="w-full" height="h-16" />;
+    if (isLoading || !currentProfile) return <SkeletonBox width="w-full" height="h-16" />;
 
     if (isError) {
         const err = error as Error;
