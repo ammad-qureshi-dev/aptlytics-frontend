@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
-import Navbar from "@/components/navigation/Navbar";
+import Navbar from "@/components/navigation2/Navbar";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";

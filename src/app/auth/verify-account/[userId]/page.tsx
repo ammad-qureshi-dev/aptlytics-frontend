@@ -7,6 +7,7 @@ import PageHeader from "@/components/page/PageHeader";
 import { AuthController } from "@/server/controllers/AuthController";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { CLIENT_PATHS } from "@/routes/ClientPaths";
 
 export default function VerifyAccount() {
 
@@ -23,7 +24,7 @@ export default function VerifyAccount() {
             toast.error("Something went wrong with verifying")
         }
         setTimeout(() => {
-            router.push("/dashboard");
+            router.push(CLIENT_PATHS.dashboard.base);
         }, 1000);
     }
 

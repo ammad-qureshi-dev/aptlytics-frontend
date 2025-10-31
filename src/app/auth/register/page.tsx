@@ -8,18 +8,20 @@ import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
 import { RegisterRequest } from "@/components/forms/Types";
 import { NavItemType } from "@/components/navigation/Types"
+import NavigationLinks from "@/components/navigation2/NavigationLinks";
+import { NavbarItem } from "@/components/navigation2/Types";
 import PageContainer from "@/components/page/PageContainer";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import PageHeader from "@/components/page/PageHeader";
 import { AuthController } from "@/server/controllers/AuthController"
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { CLIENT_PATHS } from "@/routes/ClientPaths";
 
-const ACTION_LINKS: NavItemType[] = [
+const ACTION_LINKS: NavbarItem[] = [
     {
-        href: "/auth/login",
+        href: CLIENT_PATHS.auth.login,
         label: "Have an account?",
-        icon: "log-in"
     }
 ]
 
@@ -32,7 +34,7 @@ export default function Register() {
         const response = await AuthController.register(registerRequest);
 
         if (response.success && response.data) {
-            router.push("/auth/verify-account")
+            router.push(CLIENT_PATHS.auth.verifyAccount)
         }
     }
 
@@ -79,7 +81,7 @@ export default function Register() {
                         <PrimaryButton label="Register" type="submit" icon="user-round-plus" isFullWidth />
                     </FormContainer>
                     <ActionsContainer>
-                        <NavLinksContainer navLinks={ACTION_LINKS} />
+                        <NavigationLinks items={ACTION_LINKS} />
                     </ActionsContainer>
                 </PageContentContainer>
             </PageContainer>

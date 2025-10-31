@@ -1,3 +1,7 @@
+'use client'
+
+import { motion } from "framer-motion"
+
 interface Prop {
     children: React.ReactNode;
     width?: string;
@@ -7,8 +11,16 @@ interface Prop {
 
 export default function PageContainer({ children, width = "w-5/6", height = "h-full", css }: Prop) {
     return (
-        <div
-            id="page-container"
+        <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+
+            transition={{
+                ease: "easeOut",
+                duration: 0.5,
+                type: "spring",
+                bounce: 0.1,
+            }}
             className={`
         ${width}
         ${height}
@@ -19,10 +31,9 @@ export default function PageContainer({ children, width = "w-5/6", height = "h-f
         my-8
         p-8
         border border-gray-100
-        ${css}
-      `}
+        ${css}`}
         >
             {children}
-        </div>
+        </motion.div>
     );
 }

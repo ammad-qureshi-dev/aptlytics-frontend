@@ -16,11 +16,14 @@ export default function VerifyAccount() {
     const [currValue, setCurrValue] = useState<"EMAIL" | "PHONE">("EMAIL");
 
     const sendVerificationEmail = async (commsType: "EMAIL" | "PHONE", userId: string, recipient: string) => {
+
+        const CLIENT_URL = process.env.NEXT_PUBLIC_CLIENT_PATH;
+
         const commsRequest: CommsRequest = {
             commsType: commsType,
             recipient: recipient,
             subject: "Account Verification",
-            messageContent: "Verify your account here: http://localhost:3000/auth/verify-account/" + userId
+            messageContent: "Verify your account here: " + CLIENT_URL + "/auth/verify-account/" + userId
         }
 
         const response = await CommunicationsController.send(commsType, commsRequest);
@@ -52,7 +55,6 @@ export default function VerifyAccount() {
                     </div>
                 </RadioGroupContainer>
             </PageContentContainer>
-
         </PageContainer>
     )
 }

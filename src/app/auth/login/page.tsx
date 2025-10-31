@@ -3,7 +3,6 @@
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
 import { LoginRequest } from "@/components/forms/Types";
-import { NavItemType } from "@/components/navigation/Types"
 import { AuthController } from "@/server/controllers/AuthController";
 import { UserController } from "@/server/controllers/UserController";
 import { useUserStore } from "@/stores/UserStore";
@@ -12,24 +11,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { LoginRequest as Payload } from "@/server/controllers/Types";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
-import NavLinksContainer from "@/components/containers/NavLinksContainer";
 import ActionsContainer from "@/components/containers/ActionsContainer";
 import PageContainer from "@/components/page/PageContainer";
 import PageHeader from "@/components/page/PageHeader";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import FormContainer from "@/components/forms/FormContainer";
 import { useRoleStore } from "@/stores/RoleStore";
+import { NavbarItem } from "@/components/navigation2/Types";
+import { CLIENT_PATHS } from "@/routes/ClientPaths";
+import NavigationLinks from "@/components/navigation2/NavigationLinks";
 
-const ACTION_LINKS: NavItemType[] = [
+const ACTION_LINKS: NavbarItem[] = [
     {
-        href: "/auth/register",
+        href: CLIENT_PATHS.auth.register,
         label: "New Account?",
-        icon: "user-round-plus"
     },
     {
-        href: "/auth/password-reset",
+        href: CLIENT_PATHS.auth.passwordReset,
         label: "Forgot Password?",
-        icon: "square-asterisk"
     }
 ];
 
@@ -47,10 +46,10 @@ export default function Login() {
 
         if (user) {
             if (user!.verified) {
-                return "/auth/accounts";
+                return CLIENT_PATHS.auth.accounts;
             }
 
-            return "/auth/verify-account";
+            return CLIENT_PATHS.auth.verifyAccount;
         }
 
         return "";
@@ -127,7 +126,7 @@ export default function Login() {
                         <PrimaryButton label="Login" type="submit" icon="log-in" isFullWidth />
                     </FormContainer>
                     <ActionsContainer>
-                        <NavLinksContainer navLinks={ACTION_LINKS} />
+                        <NavigationLinks items={ACTION_LINKS} />
                     </ActionsContainer>
                 </PageContentContainer>
             </PageContainer>
