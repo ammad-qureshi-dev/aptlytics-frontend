@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NavbarItem } from "./Types"
 import { DynamicIcon } from "lucide-react/dynamic";
+import { it } from "node:test";
 
 interface Prop {
     item: NavbarItem;
@@ -13,7 +14,7 @@ export default function NavigationItem({ item }: Prop) {
                 href={item.href}
                 className={`
                     h-full
-                    ${item.icon ? "w-8" : "w-fit"}
+                    ${item.icon && !item.label ? "w-8" : "w-fit"}
                     flex flex-row
                     items-center
                     justify-center
@@ -26,16 +27,37 @@ export default function NavigationItem({ item }: Prop) {
                     ${item.icon ? "" : "hover:border-[#FF7B00]"}
                 `}
             >
-                {
-                    !item.icon &&
-                    item.label &&
-                    <span>{item.label}</span>
-                }
-                {
-                    item.icon &&
-                    <DynamicIcon name={item.icon} size={22} strokeWidth={2.25} />
-                }
+                <div className="w-fit flex flex-row items-center justify-center gap-2">
+                    {GetItem(item)}
+                </div>
             </Link>
         </>
     )
+}
+
+function GetItem(item: NavbarItem) {
+    if (item.label && item.icon) {
+        return (
+            <>
+                <DynamicIcon name={item.icon} size={22} strokeWidth={2.25} />
+                <span>{item.label}</span>
+            </>
+        )
+    }
+
+    if (item.label) {
+        return (
+            <>
+                <span>{item.label}</span>
+            </>
+        )
+    }
+
+    if (item.icon) {
+        return (
+            <>
+                <DynamicIcon name={item.icon} size={22} strokeWidth={2.25} />
+            </>
+        )
+    }
 }

@@ -1,5 +1,7 @@
 export const CLIENT_PATHS = {
-  appointments: "/appointments",
+  appointments: {
+    base: "/appointments",
+  },
   auth: {
     base: "/auth",
     accounts: "/auth/accounts",

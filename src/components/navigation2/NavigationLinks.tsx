@@ -8,7 +8,7 @@ interface Prop {
 export default function NavLinks({ items }: Prop) {
     return (
         <>
-            <ul className="w-full h-full flex flex-row gap-4 items-center justify-between whitespace-nowrap">
+            <ul className="w-full h-full flex-row gap-4 items-center justify-between whitespace-nowrap hidden lg:flex">
                 {
                     items.map((item, key) => {
                         return (
