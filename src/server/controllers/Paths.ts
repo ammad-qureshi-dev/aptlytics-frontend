@@ -4,10 +4,10 @@ export const V1: string = "/v1";
 export const Paths = {
   v1: {
     auth: {
-      verifyAccount: "/verify-account/%s",
-      register: "/register",
-      login: "/login",
-      logout: "/logout",
+      verifyAccount: "/auth/verify-account/$",
+      register: "/auth/register",
+      login: "/auth/login",
+      logout: "/auth/logout",
     },
     user: {
       switchProfile: "/switch-profile/%s",
