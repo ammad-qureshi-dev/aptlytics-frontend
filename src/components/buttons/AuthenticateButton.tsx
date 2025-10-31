@@ -1,12 +1,12 @@
 import { usePathname } from "next/navigation";
 import LinkButton from "./LinkButton";
-import { NavItemType } from "../navigation/Types";
+import { NavbarItem } from "../navigation2/Types";
 
 export default function AuthenticateButton() {
 
     const pathname = usePathname();
 
-    let navItem: NavItemType = {
+    let navItem: NavbarItem = {
         href: "/auth/login",
         label: "Login",
         icon: "lock",

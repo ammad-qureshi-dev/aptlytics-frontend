@@ -2,7 +2,7 @@ import DisplayCardContainer from "@/components/cards/DisplayCardContainer";
 import { PageCardType } from "@/components/cards/Types";
 import LinkButton from "@/components/buttons/LinkButton";
 import CustomerSearch from "@/components/CustomerSearch";
-import { NavItemType } from "@/components/navigation/Types";
+import { NavbarItem } from "@/components/navigation2/Types";
 
 export default function CustomerDashboard() {
 
@@ -34,7 +34,7 @@ export default function CustomerDashboard() {
 
     ]
 
-    const addNewCustomerItem: NavItemType = {
+    const addNewCustomerItem: NavbarItem = {
         href: "/customers/add-customer-v2",
         label: "Add",
         icon: "user-plus"
