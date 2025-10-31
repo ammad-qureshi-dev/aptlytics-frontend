@@ -1,8 +1,8 @@
-import { NavItemType } from "./Types";
-import NavItem from "./NavItem";
+import NavigationItem from "./NavigationItem";
+import { NavbarItem } from "./Types";
 
 export default function HamburgerNavbar() {
-    const navItems: NavItemType[] = [
+    const navItems: NavbarItem[] = [
         { href: "/appointments", label: "Appointments", icon: "clipboard-clock" },
         { href: "/business", label: "Business", icon: "store" },
         { href: "/customers", label: "Customers", icon: "users-round" },
@@ -15,7 +15,7 @@ export default function HamburgerNavbar() {
             <ul className="flex flex-col gap-4">
                 {navItems.map((item, key) => (
                     <li key={key}>
-                        <NavItem navItem={item} />
+                        <NavigationItem item={item} />
                     </li>
                 ))}
             </ul>

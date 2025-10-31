@@ -2,7 +2,6 @@ import { UserController } from "@/server/controllers/UserController";
 import { useRoleStore } from "@/stores/RoleStore";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import SimpleNavbar from "../navigation/SimpleNavbar";
 import SkeletonBox from "../loading/SkeletonBox";
 import { NavbarItem } from "./Types";
 import NavigationLinks from "./NavigationLinks";
@@ -99,11 +98,7 @@ export default function Navbar() {
         setCurrentRole(role);
     }, [role]);
 
-    if (isError) {
-        return <SimpleNavbar role={role} />
-    }
-
-    if (isLoading) {
+    if (isError || isLoading) {
         return <SkeletonBox width="w-full" height={"h-full"} />
     }
 
