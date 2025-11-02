@@ -14,7 +14,7 @@ export const CLIENT_PATHS = {
   business: {
     base: "/business",
     registration: "/business/registration",
-    services: "/business/services",
+    services: "/business/:businessId/services",
   },
   customers: {
     base: "/customers",

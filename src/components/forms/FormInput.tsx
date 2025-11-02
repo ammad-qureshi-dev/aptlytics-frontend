@@ -6,7 +6,7 @@ interface FormInputProp {
 
 export default function FormInput({ input }: FormInputProp) {
     return (
-        <div id="form-input" className={`flex flex-col w-full ${input.css}`}>
+        <div id="form-input" className={`flex flex-col ${input.width ? input.width : "w-full"}`}>
             <p className="flex flex-row gap-1">{input.label}
                 {
                     input.isRequired &&

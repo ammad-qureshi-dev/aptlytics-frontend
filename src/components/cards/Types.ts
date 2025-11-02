@@ -12,3 +12,11 @@ export type PageCardType = {
   extra?: any;
   redirectTo?: string;
 };
+
+export type ServiceCardType = {
+  name: string;
+  description?: string;
+  price: number;
+  time: number;
+  serviceLength: "MINUTE" | "HOUR" | "DAY" | "WEEK";
+};

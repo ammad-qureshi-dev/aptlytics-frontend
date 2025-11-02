@@ -1,3 +1,5 @@
+"use client";
+
 import NavigationItem from "./NavigationItem";
 import { NavbarItem } from "./Types";
 

@@ -1,6 +1,5 @@
 import { useId } from "react";
-import { IconName } from "../navigation/Types";
-import { DynamicIcon } from "lucide-react/dynamic";
+import { DynamicIcon, IconName } from "lucide-react/dynamic";
 import { CircleCheck } from "lucide-react";
 
 interface Prop {

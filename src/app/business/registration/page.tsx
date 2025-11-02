@@ -8,7 +8,13 @@ import { RegisterBusinessRequest } from "@/components/forms/Types";
 import PageContainer from "@/components/page/PageContainer";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import PageHeader from "@/components/page/PageHeader";
+import { CLIENT_PATHS } from "@/routes/ClientPaths";
 import { BusinessController } from "@/server/controllers/BusinessController";
+import { UserController } from "@/server/controllers/UserController";
+import { useRoleStore } from "@/stores/RoleStore";
+import { useUserStore } from "@/stores/UserStore";
+import { urlFormat } from "@/utils/StringUtils";
+import { usePathname, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -16,12 +22,25 @@ export default function BusinessRegistration() {
 
     const [registerRequest, setRegisterRequest] = useState<RegisterBusinessRequest>({ name: "", });
 
+    const router = useRouter();
+    const roleStore = useRoleStore();
+
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const response = await BusinessController.register(registerRequest);
         if (response.success && response.data) {
+
+            const businessId = response.data;
+            await UserController.switchProfile(businessId, "OWNER");
+            roleStore.setRole("ROLE_OWNER");
+
             toast.success("Business Created!");
+
+            setTimeout(() => {
+                router.push(urlFormat(CLIENT_PATHS.business.services, businessId));
+            }, 500);
+
         } else {
             toast.error("Error");
             console.error(response);

@@ -1,0 +1,123 @@
+"use client";
+
+import PrimaryButton from "@/components/buttons/PrimaryButton";
+import DropDown from "@/components/forms/dropdown/DropDown";
+import { DropDownOptionType } from "@/components/forms/dropdown/Types";
+import FormContainer from "@/components/forms/FormContainer";
+import FormInput from "@/components/forms/FormInput";
+import GridComponent from "@/components/forms/GridForm";
+import { LoginRequest, ServicePayload } from "@/components/forms/Types";
+import { FormEvent, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import ServiceCardDisplay from "./ServiceCardDisplay";
+import { ServicesController } from "@/server/controllers/ServicesController";
+
+const SERVICE_LENGTHS_OPTIONS: DropDownOptionType[] = [
+    {
+        label: "MINUTE",
+        value: "MINUTE"
+    }
+]
+
+interface Prop {
+    businessId: string;
+}
+
+export default function ServiceAddForm({ businessId }: Prop) {
+
+    const [servicesInput, setServicesInput] = useState<ServicePayload[]>([]);
+    const [currentServiceInput, setCurrentServiceInput] = useState<ServicePayload>({ name: "", price: 0, time: 0, serviceLength: "MINUTE" });
+
+    useEffect(() => {
+        console.log(businessId);
+    }, []);
+
+    const onRemove = (serviceLabel: string) => {
+        setServicesInput(prev => prev.filter(service => service.name !== serviceLabel));
+    };
+
+    function isServiceAlreadyAdded(service: ServicePayload, inputs: ServicePayload[]): boolean {
+        if (inputs === null || inputs === undefined || inputs.length === 0) {
+            return false;
+        }
+
+        return inputs.some(input => input.name === service.name);
+    }
+
+    const onAddService = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const input = { ...currentServiceInput };
+        const addedInputs = [...servicesInput];
+
+        if (isServiceAlreadyAdded(input, addedInputs)) {
+            toast.error("Service already exists with that name");
+            return;
+        }
+
+        addedInputs.push(input);
+
+        setServicesInput(addedInputs);
+    }
+
+    const saveServices = async () => {
+        const response = await ServicesController.addServices(businessId, servicesInput);
+
+        if (response.data && response.success) {
+            toast.success("Services Added!");
+        } else {
+            toast.error("Error");
+        }
+    }
+
+    return (
+        <>
+            <div className="w-full flex lg:flex-row justify-between flex-col gap-12">
+                <div className="lg:w-1/3 w-full bg-white p-4 rounded-md shadow-md">
+                    <FormContainer onSubmitFn={onAddService}>
+                        <GridComponent cols={2} gap={24}>
+                            <FormInput input={{
+                                label: "Service Name",
+                                inputType: "text",
+                                // placeHolder: "Service Name",
+                                value: currentServiceInput?.name,
+                                isRequired: true,
+                                onValueChange: (value) => setCurrentServiceInput(prev => ({ ...prev, name: value })),
+                            }} />
+                            <FormInput input={{
+                                label: "Description",
+                                inputType: "textarea",
+                                // placeHolder: "Enter a detailed description about this service",
+                                value: currentServiceInput?.description,
+                                isRequired: false,
+                                onValueChange: (value) => setCurrentServiceInput(prev => ({ ...prev, description: value })),
+                            }} />
+                            <FormInput input={{
+                                label: "Price",
+                                inputType: "number",
+                                placeHolder: "$$$",
+                                value: currentServiceInput?.price,
+                                isRequired: true,
+                                onValueChange: (value) => setCurrentServiceInput(prev => ({ ...prev, price: value })),
+                            }} />
+                            <div className="flex flex-row h-fit gap-2 items-center justify-between">
+                                <FormInput input={{
+                                    label: "Service Length",
+                                    inputType: "number",
+                                    // placeHolder: "How long is the service",
+                                    value: currentServiceInput?.serviceLength,
+                                    isRequired: true,
+                                    onValueChange: (value) => setCurrentServiceInput(prev => ({ ...prev, serviceLength: value })),
+                                    width: "w-1/2"
+                                }} />
+                                <DropDown options={SERVICE_LENGTHS_OPTIONS} />
+                            </div>
+                        </GridComponent>
+                        <PrimaryButton label="Add Service" type="button" icon="plus" isFullWidth onClick={saveServices} />
+                    </FormContainer>
+                </div>
+                <ServiceCardDisplay cards={servicesInput} onRemove={onRemove} />
+            </div>
+        </>
+    )
+}
