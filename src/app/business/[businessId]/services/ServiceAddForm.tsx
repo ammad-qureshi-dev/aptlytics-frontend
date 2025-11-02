@@ -11,6 +11,10 @@ import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ServiceCardDisplay from "./ServiceCardDisplay";
 import { ServicesController } from "@/server/controllers/ServicesController";
+import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "@/stores/UserStore";
+import { BusinessController } from "@/server/controllers/BusinessController";
+import SkeletonBox from "@/components/loading/SkeletonBox";
 
 const SERVICE_LENGTHS_OPTIONS: DropDownOptionType[] = [
     {
@@ -19,18 +23,28 @@ const SERVICE_LENGTHS_OPTIONS: DropDownOptionType[] = [
     }
 ]
 
-interface Prop {
-    businessId: string;
-}
-
-export default function ServiceAddForm({ businessId }: Prop) {
+export default function ServiceAddForm() {
 
     const [servicesInput, setServicesInput] = useState<ServicePayload[]>([]);
     const [currentServiceInput, setCurrentServiceInput] = useState<ServicePayload>({ name: "", price: 0, time: 0, serviceLength: "MINUTE" });
 
-    useEffect(() => {
-        console.log(businessId);
-    }, []);
+    const businessId = useUserStore((state) => state.user?.contextId) as string;
+
+    const fetchBusinessById = async () => {
+        return await BusinessController.getBusinessById(businessId);
+    }
+
+    const { data, isLoading, isError, error } = useQuery<any>({
+        queryKey: ["business"],
+        queryFn: fetchBusinessById,
+        refetchOnMount: "always",
+        enabled: !!businessId
+    });
+
+    if (isLoading) {
+        return <SkeletonBox width={"w-full"} height={"h-full"} />
+    }
+
 
     const onRemove = (serviceLabel: string) => {
         setServicesInput(prev => prev.filter(service => service.name !== serviceLabel));

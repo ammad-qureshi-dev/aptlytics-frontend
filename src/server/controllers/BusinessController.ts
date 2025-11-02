@@ -20,8 +20,6 @@ export class BusinessController extends BaseController {
   }
 
   static async getBusinessById(businessId: string) {
-    debugger;
-
     const endpoint =
       this.SERVER_PATH +
       this.ENDPOINT +

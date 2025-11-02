@@ -7,6 +7,7 @@ import { NavbarItem } from "./Types";
 import NavigationLinks from "./NavigationLinks";
 import DefaultLogo from "../common/DefaultLogo";
 import AccountNavbar from "./AccountNavbar";
+import { useUserStore } from "@/stores/UserStore";
 
 export const DEFAULT_NAVIGATION_LINKS: NavbarItem[] = [
     {
@@ -42,33 +43,29 @@ export const OWNER_NAVIGATION_LINKS: NavbarItem[] = [
     {
         href: "/appointments",
         label: "Appointments",
-        // icon: "clipboard-clock"
     },
     {
         href: "/business",
         label: "Business",
-        // icon: "store"
     },
     {
         href: "/customers",
         label: "Customers",
-        // icon: "users-round"
     },
     {
         href: "/dashboard",
         label: "Dashboard",
-        // icon: "layout-dashboard",
     },
     {
         href: "/team",
         label: "Team",
-        // icon: "boxes",
     }
 ]
 
 export default function Navbar() {
     const { role, setRole, clearRole } = useRoleStore();
-    const [currentRole, setCurrentRole] = useState<"CUSTOMER" | "EMPLOYEE" | "OWNER" | undefined>(role);
+    const contextId = useUserStore((state) => state.user?.contextId) as string;
+
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["role"],
@@ -95,34 +92,41 @@ export default function Navbar() {
         staleTime: 5 * 60 * 1000,
     });
 
-    useEffect(() => {
-        setCurrentRole(role);
-    }, [role]);
-
-    if (isError || isLoading) {
-        return <SkeletonBox width="w-full" height={"h-full"} />
-    }
+    if (isLoading) return <SkeletonBox width="w-full" height="h-full" />;
+    if (isError) return <SkeletonBox width="w-full" height="h-full" />;
 
     return (
-        <>
-            <div id="navbar" className="w-full h-16 flex flex-row items-center justify-between border-gray-50 shadow-sm px-4">
-                <div className="flex flex-row gap-2 items-center w-fit h-full">
-                    <DefaultLogo />
-                    <NavigationLinks items={getNavigationLinks(currentRole)} />
-                </div>
-                <div>
-                    <AccountNavbar role={currentRole} />
-                </div>
+        <div id="navbar" className="w-full h-16 flex flex-row items-center justify-between border-gray-50 shadow-sm px-4">
+            <div className="flex flex-row gap-2 items-center w-fit h-full">
+                <DefaultLogo />
+                <NavigationLinks items={getNavigationLinks(role, contextId)} />
             </div>
-        </>
-    )
+            <AccountNavbar role={role} />
+        </div>
+    );
 }
 
-function getNavigationLinks(role: "OWNER" | "EMPLOYEE" | "CUSTOMER" | undefined) {
+
+function getNavigationLinks(role: "OWNER" | "EMPLOYEE" | "CUSTOMER" | undefined, contextId?: string) {
     switch (role) {
-        case "CUSTOMER": return DEFAULT_NAVIGATION_LINKS;
-        case "EMPLOYEE": return EMPLOYEE_NAVIGATION_LINKS;
-        case "OWNER": return OWNER_NAVIGATION_LINKS;
-        default: return DEFAULT_NAVIGATION_LINKS;
+        case "CUSTOMER":
+            return DEFAULT_NAVIGATION_LINKS;
+        case "EMPLOYEE":
+            return EMPLOYEE_NAVIGATION_LINKS;
+        case "OWNER":
+            getBusinessByIdLink(contextId);
+            return OWNER_NAVIGATION_LINKS;
+        default:
+            return DEFAULT_NAVIGATION_LINKS;
+    }
+}
+
+
+async function getBusinessByIdLink(contextId?: string) {
+    if (!contextId) return;
+
+    const businessLink = OWNER_NAVIGATION_LINKS.find((e) => e.href.startsWith("/business"));
+    if (businessLink) {
+        businessLink.href = `/business/${contextId}`;
     }
 }

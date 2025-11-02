@@ -38,7 +38,7 @@ export default function BusinessRegistration() {
             toast.success("Business Created!");
 
             setTimeout(() => {
-                router.push(urlFormat(CLIENT_PATHS.business.services, businessId));
+                router.push(urlFormat(CLIENT_PATHS.business.services, { businessId: businessId }));
             }, 500);
 
         } else {
