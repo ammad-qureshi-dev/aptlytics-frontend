@@ -23,7 +23,7 @@ export default function BusinessRegistration() {
     const [registerRequest, setRegisterRequest] = useState<RegisterBusinessRequest>({ name: "", });
 
     const router = useRouter();
-    const roleStore = useRoleStore();
+    const { setRole } = useRoleStore();
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -33,7 +33,7 @@ export default function BusinessRegistration() {
 
             const businessId = response.data;
             await UserController.switchProfile(businessId, "OWNER");
-            roleStore.setRole("ROLE_OWNER");
+            setRole("OWNER");
 
             toast.success("Business Created!");
 
