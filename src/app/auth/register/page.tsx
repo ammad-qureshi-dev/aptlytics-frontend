@@ -2,12 +2,10 @@
 
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import ActionsContainer from "@/components/containers/ActionsContainer";
-import NavLinksContainer from "@/components/containers/NavLinksContainer";
 import FormContainer from "@/components/forms/FormContainer";
 import FormInput from "@/components/forms/FormInput";
 import GridComponent from "@/components/forms/GridForm"
 import { RegisterRequest } from "@/components/forms/Types";
-import { NavItemType } from "@/components/navigation/Types"
 import NavigationLinks from "@/components/navigation2/NavigationLinks";
 import { NavbarItem } from "@/components/navigation2/Types";
 import PageContainer from "@/components/page/PageContainer";
@@ -34,7 +32,7 @@ export default function Register() {
         const response = await AuthController.register(registerRequest);
 
         if (response.success && response.data) {
-            router.push(CLIENT_PATHS.auth.verifyAccount)
+            router.push(CLIENT_PATHS.auth.login)
         }
     }
 

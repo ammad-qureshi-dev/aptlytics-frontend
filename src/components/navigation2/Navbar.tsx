@@ -16,6 +16,10 @@ export const DEFAULT_NAVIGATION_LINKS: NavbarItem[] = [
     {
         href: "/getting-started",
         label: "Get Started"
+    },
+    {
+        href: "/dashboard",
+        label: "Dashboard",
     }
 ]
 
@@ -23,17 +27,14 @@ export const EMPLOYEE_NAVIGATION_LINKS: NavbarItem[] = [
     {
         href: "/appointments",
         label: "Appointments",
-        icon: "clipboard-clock"
     },
     {
         href: "/customers",
         label: "Customers",
-        icon: "users-round"
     },
     {
         href: "/dashboard",
         label: "Dashboard",
-        icon: "layout-dashboard",
     }
 ]
 

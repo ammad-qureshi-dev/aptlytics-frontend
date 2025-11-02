@@ -14,9 +14,9 @@ import { toast } from "react-toastify";
 
 export default function VerifyAccount() {
     const [currValue, setCurrValue] = useState<"EMAIL" | "PHONE">("EMAIL");
+    const [verificationSentStatus, setVerifySentStatus] = useState<"Send" | "Sending..." | "Sent!">("Send");
 
     const sendVerificationEmail = async (commsType: "EMAIL" | "PHONE", userId: string, recipient: string) => {
-
         const CLIENT_URL = process.env.NEXT_PUBLIC_CLIENT_PATH;
 
         const commsRequest: CommsRequest = {
@@ -32,10 +32,13 @@ export default function VerifyAccount() {
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setVerifySentStatus("Sending...");
 
         const commsType = currValue;
         const me = await UserController.getMe();
         const verificationSent = await sendVerificationEmail(commsType, me.userId, commsType === "EMAIL" ? me.email : me.phoneNumber);
+        setVerifySentStatus("Sent!");
+
         if (verificationSent) {
             toast.success("Verification via " + capitalizeString(commsType) + " sent")
         } else {
@@ -51,7 +54,7 @@ export default function VerifyAccount() {
                     <RadioInput name="method" label="Phone" value="PHONE" setValue={setCurrValue} selectedValue={currValue} icon="tablet-smartphone" />
                     <RadioInput name="method" label="Email" value="EMAIL" setValue={setCurrValue} selectedValue={currValue} icon="mail" />
                     <div className="flex flex-col items-end">
-                        <PrimaryButton label="Send" type="submit" />
+                        <PrimaryButton label={verificationSentStatus} type="submit" />
                     </div>
                 </RadioGroupContainer>
             </PageContentContainer>
