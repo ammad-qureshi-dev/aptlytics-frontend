@@ -37,3 +37,18 @@ export function capitalizeString(s: string) {
   _s = _s.toLowerCase();
   return _s.charAt(0).toUpperCase() + _s.substring(1);
 }
+
+/**
+ * Replaces URL params with ARGs. Example URL: /v1/business/:businessId/services
+ * @param url url with params
+ * @param args arguments to replace params
+ */
+export function urlFormat(url: string, params: Record<string, any>) {
+  return url.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => {
+    const value = params[key];
+    if (value === undefined || value === null) {
+      throw new Error(`Missing value for URL param "${key}"`);
+    }
+    return encodeURIComponent(String(value));
+  });
+}

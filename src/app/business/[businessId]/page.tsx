@@ -7,10 +7,9 @@ import PageHeader from "@/components/page/PageHeader";
 import { BusinessController } from "@/server/controllers/BusinessController";
 import { useUserStore } from "@/stores/UserStore";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
 export default function Business() {
-    const businessId = useUserStore.getState().user?.contextId as string;
+    const businessId = useUserStore((state) => state.user?.contextId) as string;
 
     const fetchBusinessById = async () => {
         return await BusinessController.getBusinessById(businessId);
@@ -19,7 +18,8 @@ export default function Business() {
     const { data, isLoading, isError, error } = useQuery<any>({
         queryKey: ["business"],
         queryFn: fetchBusinessById,
-        refetchOnMount: "always"
+        refetchOnMount: "always",
+        enabled: !!businessId
     });
 
     if (isLoading) {
@@ -32,10 +32,10 @@ export default function Business() {
 
     return (
         <PageContainer>
-            {/* ToDo: Fetch business name and replace title with name*/}
-            <PageHeader title={data.name} subTitle={data.description} />
+            <PageHeader title={data?.name} subTitle={data?.description} />
             <PageContentContainer>
                 hi
+                {/* dashboard showing revenue and number of customers and increases and decreases in profit */}
             </PageContentContainer>
         </PageContainer>
     )

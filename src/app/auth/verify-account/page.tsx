@@ -1,7 +1,7 @@
 "use client";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
-import RadioGroupContainer from "@/components/forms/RadioGroupContainer";
-import RadioInput from "@/components/forms/RadioInput";
+import RadioGroupContainer from "@/components/forms/radioInput/RadioGroupContainer";
+import RadioInput from "@/components/forms/radioInput/RadioInput";
 import PageContainer from "@/components/page/PageContainer";
 import PageContentContainer from "@/components/page/PageContentContainer";
 import PageHeader from "@/components/page/PageHeader";

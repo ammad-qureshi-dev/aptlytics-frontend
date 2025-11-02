@@ -6,7 +6,7 @@ export type FormInputType = {
   placeHolder?: string;
   value: any;
   onValueChange: (newValue: any) => void;
-  css?: string;
+  width?: string;
   isRequired?: boolean;
 };
 
@@ -44,4 +44,12 @@ export type RegisterBusinessRequest = {
   phoneNumber?: string;
   email?: string;
   description?: string;
+};
+
+export type ServicePayload = {
+  name: string;
+  description?: string;
+  price: number;
+  time: number;
+  serviceLength: "MINUTE" | "HOUR" | "DAY" | "WEEK";
 };
