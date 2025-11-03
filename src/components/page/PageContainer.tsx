@@ -1,5 +1,6 @@
 'use client'
 
+import { useUnloadHook } from "@/hooks/UnloadHook";
 import { motion } from "framer-motion"
 
 interface Prop {
@@ -7,9 +8,15 @@ interface Prop {
     width?: string;
     height?: string;
     css?: string;
+    requireUnload?: boolean
 }
 
-export default function PageContainer({ children, width = "w-5/6", height = "h-full", css }: Prop) {
+export default function PageContainer({ children, width = "w-5/6", height = "h-full", css, requireUnload }: Prop) {
+
+    if (requireUnload) {
+        useUnloadHook();
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0 }}

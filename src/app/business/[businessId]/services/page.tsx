@@ -6,11 +6,10 @@ import PageHeader from "@/components/page/PageHeader";
 import ServiceAddForm from "./ServiceAddForm";
 
 export default function Services() {
-
     return (
-        <PageContainer>
+        <PageContainer requireUnload>
             <PageHeader
-                title="Business Services"
+                title="Adding Business Services"
                 subTitle="Add some services that your business provides"
             />
             <PageContentContainer>

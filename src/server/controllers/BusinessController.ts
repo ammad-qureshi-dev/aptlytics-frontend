@@ -1,7 +1,7 @@
 import { RegisterBusinessRequest } from "@/components/forms/Types";
 import { BaseController } from "./BaseController";
 import { ServiceResponse } from "./Types";
-import { urlFormat } from "@/utils/StringUtils";
+import { formatUrl } from "@/utils/StringUtils";
 import { SERVER_PATHS } from "@/routes/ServerPaths";
 
 export class BusinessController extends BaseController {
@@ -23,7 +23,7 @@ export class BusinessController extends BaseController {
     const endpoint =
       this.SERVER_PATH +
       this.ENDPOINT +
-      urlFormat(SERVER_PATHS.v1.business.findBusinessById, {
+      formatUrl(SERVER_PATHS.v1.business.findBusinessById, {
         businessId: businessId,
       });
 

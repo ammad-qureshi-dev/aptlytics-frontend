@@ -1,13 +1,32 @@
+"use client";
+
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import ServiceCard from "@/components/cards/ServiceCard";
 import { ServiceCardType } from "@/components/cards/Types";
+import { ServicePayload } from "@/components/forms/Types";
+import { ServicesController } from "@/server/controllers/ServicesController";
+import { toast } from "react-toastify";
 
 interface Prop {
     cards: ServiceCardType[];
     onRemove?: (index: string) => void;
+    businessId: string,
+    servicesInput: ServicePayload[];
 }
 
-export default function ServiceCardDisplay({ cards, onRemove }: Prop) {
+export default function ServiceCardDisplay({ cards, onRemove, businessId, servicesInput }: Prop) {
+
+    const saveServices = async () => {
+        const response = await ServicesController.addServices(businessId, servicesInput);
+
+        if (response.data && response.success) {
+            toast.success("Services Added!");
+        } else {
+            console.error(response);
+            toast.error("Error");
+        }
+    }
+
     return (
         <div
             id="service-card-display"
@@ -54,10 +73,8 @@ export default function ServiceCardDisplay({ cards, onRemove }: Prop) {
                     ))}
                 </div>
             </div>
-
-            {/* Save button pinned to bottom */}
             <div className="flex justify-end pt-3 border-gray-100">
-                <PrimaryButton label="Save" type="button" />
+                <PrimaryButton label="Save" type="button" onClick={saveServices} />
             </div>
         </div>
     );

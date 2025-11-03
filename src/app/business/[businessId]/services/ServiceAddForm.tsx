@@ -65,23 +65,12 @@ export default function ServiceAddForm() {
         const addedInputs = [...servicesInput];
 
         if (isServiceAlreadyAdded(input, addedInputs)) {
-            toast.error("Service already exists with that name");
             return;
         }
 
         addedInputs.push(input);
 
         setServicesInput(addedInputs);
-    }
-
-    const saveServices = async () => {
-        const response = await ServicesController.addServices(businessId, servicesInput);
-
-        if (response.data && response.success) {
-            toast.success("Services Added!");
-        } else {
-            toast.error("Error");
-        }
     }
 
     return (
@@ -119,18 +108,18 @@ export default function ServiceAddForm() {
                                     label: "Service Length",
                                     inputType: "number",
                                     // placeHolder: "How long is the service",
-                                    value: currentServiceInput?.serviceLength,
+                                    value: currentServiceInput?.time,
                                     isRequired: true,
-                                    onValueChange: (value) => setCurrentServiceInput(prev => ({ ...prev, serviceLength: value })),
+                                    onValueChange: (value) => setCurrentServiceInput(prev => ({ ...prev, time: value })),
                                     width: "w-1/2"
                                 }} />
                                 <DropDown options={SERVICE_LENGTHS_OPTIONS} />
                             </div>
                         </GridComponent>
-                        <PrimaryButton label="Add Service" type="button" icon="plus" isFullWidth onClick={saveServices} />
+                        <PrimaryButton label="Add Service" type="submit" icon="plus" isFullWidth onClick={onAddService} />
                     </FormContainer>
                 </div>
-                <ServiceCardDisplay cards={servicesInput} onRemove={onRemove} />
+                <ServiceCardDisplay cards={servicesInput} onRemove={onRemove} servicesInput={servicesInput} businessId={businessId} />
             </div>
         </>
     )

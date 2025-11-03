@@ -7,6 +7,9 @@ import PageHeader from "@/components/page/PageHeader";
 import { BusinessController } from "@/server/controllers/BusinessController";
 import { useUserStore } from "@/stores/UserStore";
 import { useQuery } from "@tanstack/react-query";
+import { CLIENT_PATHS } from "@/routes/ClientPaths";
+import { formatUrl } from "@/utils/StringUtils";
+import NavigationItem from "@/components/navigation2/NavigationItem";
 
 export default function Business() {
     const businessId = useUserStore((state) => state.user?.contextId) as string;
@@ -34,8 +37,14 @@ export default function Business() {
         <PageContainer>
             <PageHeader title={data?.name} subTitle={data?.description} />
             <PageContentContainer>
-                hi
                 {/* dashboard showing revenue and number of customers and increases and decreases in profit */}
+                <div>
+                    <NavigationItem item={{
+                        label: "Add new services",
+                        href: formatUrl(CLIENT_PATHS.business.services, { businessId: businessId }),
+                        icon: "external-link"
+                    }} />
+                </div>
             </PageContentContainer>
         </PageContainer>
     )

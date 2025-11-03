@@ -12,9 +12,8 @@ import { CLIENT_PATHS } from "@/routes/ClientPaths";
 import { BusinessController } from "@/server/controllers/BusinessController";
 import { UserController } from "@/server/controllers/UserController";
 import { useRoleStore } from "@/stores/RoleStore";
-import { useUserStore } from "@/stores/UserStore";
-import { urlFormat } from "@/utils/StringUtils";
-import { usePathname, useRouter } from "next/navigation";
+import { formatUrl } from "@/utils/StringUtils";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -38,7 +37,7 @@ export default function BusinessRegistration() {
             toast.success("Business Created!");
 
             setTimeout(() => {
-                router.push(urlFormat(CLIENT_PATHS.business.services, { businessId: businessId }));
+                router.push(formatUrl(CLIENT_PATHS.business.services, { businessId: businessId }));
             }, 500);
 
         } else {
