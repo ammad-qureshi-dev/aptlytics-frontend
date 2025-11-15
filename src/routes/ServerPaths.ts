@@ -18,6 +18,7 @@ export const SERVER_PATHS = {
     },
     services: {
       addServices: "/:businessId",
+      getAllServices: "/:businessId",
     },
   },
 };

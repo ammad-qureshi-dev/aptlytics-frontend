@@ -22,4 +22,18 @@ export class ServicesController extends BaseController {
 
     return response;
   }
+
+  static async getAllServices(businessId: string) {
+    const endpoint = formatUrl(SERVER_PATHS.v1.services.getAllServices, {
+      businessId: businessId,
+    });
+
+    const response = await BaseController.getResponse(
+      BaseController.axiosInstance.get<ServiceResponse>(
+        this.BASE_SERVER_PATH + this.ENDPOINT + endpoint
+      )
+    );
+
+    return response;
+  }
 }

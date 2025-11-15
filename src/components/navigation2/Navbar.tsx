@@ -66,6 +66,7 @@ export default function Navbar() {
     const { role, setRole, clearRole } = useRoleStore();
     const contextId = useUserStore((state) => state.user?.contextId) as string;
 
+    console.log(role + " " + contextId);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["role"],
@@ -89,10 +90,20 @@ export default function Navbar() {
         enabled: role === undefined,
         refetchOnWindowFocus: false,
         retry: false,
-        staleTime: 5 * 60 * 1000,
     });
 
-    if (isLoading) return <SkeletonBox width="w-full" height="h-full" />;
+    if (isLoading) {
+        return (
+            <div id="navbar" className="w-full h-16 flex flex-row items-center justify-between border-gray-50 shadow-sm px-4">
+                <div className="flex flex-row gap-2 items-center w-fit h-full">
+                    <DefaultLogo />
+                    <NavigationLinks items={DEFAULT_NAVIGATION_LINKS} />
+                </div>
+                <AccountNavbar role={undefined} />
+            </div>
+        );;
+    }
+
     if (isError) return <SkeletonBox width="w-full" height="h-full" />;
 
     return (
