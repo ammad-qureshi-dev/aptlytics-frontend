@@ -52,4 +52,5 @@ export type ServicePayload = {
   price: number;
   time: number;
   serviceLength: "MINUTE" | "HOUR" | "DAY" | "WEEK";
+  isNew?: boolean;
 };

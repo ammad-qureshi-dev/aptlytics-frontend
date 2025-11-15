@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { NavbarItem } from "./Types"
 import { DynamicIcon } from "lucide-react/dynamic";
-import { it } from "node:test";
 
 interface Prop {
     item: NavbarItem;

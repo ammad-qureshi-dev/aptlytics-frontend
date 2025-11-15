@@ -5,6 +5,8 @@ import { CircleCheck } from "lucide-react";
 import Pill from "../common/Pill";
 import { getRoleColor } from "@/utils/IconUtils";
 import { useRoleStore } from "@/stores/RoleStore";
+import { useUserStore } from "@/stores/UserStore";
+import { User } from "@/stores/Types";
 
 interface ProfileProp {
     profile: UserProfile;
@@ -15,13 +17,33 @@ interface ProfileProp {
 export default function Profile({ profile, currentProfile, refreshOnSelect }: ProfileProp) {
 
     const queryClient = useQueryClient();
-    const roleStore = useRoleStore();
+    const { setRole } = useRoleStore();
+    const { setUser } = useUserStore();
 
     const selectProfile = async () => {
         await UserController.switchProfile(profile.contextId, profile.role);
         queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
         queryClient.invalidateQueries({ queryKey: ["role"] });
-        roleStore.setRole(profile.role);
+
+        setUser((prev) => {
+            if (!prev) {
+                return {
+                    contextId: profile.contextId,
+                    email: "",
+                    fullName: "",
+                    phoneNumber: "",
+                    userId: "",
+                    lastSignedInAs: "CUSTOMER",
+                };
+            }
+
+            return {
+                ...prev,
+                contextId: profile.contextId,
+            };
+        });
+
+        setRole(profile.role);
 
         if (refreshOnSelect) {
             window.location.reload();

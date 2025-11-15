@@ -53,7 +53,7 @@ export default function AccountNavbar({ role }: Prop) {
 
     return (
         <>
-            <div id="account-navbar" className="w-full h-full">
+            <div id="account-navbar" className="h-full">
                 <NavigationLinks items={getLinks()} />
                 <div className="flex flex-row items-center lg:hidden">
                     <button type="button" onClick={() => { setShowHamburgerMenu(!showHamburgerMenu) }} className="cursor-pointer">

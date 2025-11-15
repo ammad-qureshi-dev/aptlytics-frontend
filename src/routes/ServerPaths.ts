@@ -16,5 +16,9 @@ export const SERVER_PATHS = {
       register: "/register",
       findBusinessById: "/:businessId",
     },
+    services: {
+      addServices: "/:businessId",
+      getAllServices: "/:businessId",
+    },
   },
 };

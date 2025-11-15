@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { Circle, CircleDashed, Star, X } from "lucide-react";
 import { ServiceCardType } from "./Types";
 
 interface Prop {
@@ -20,21 +20,31 @@ export default function ServiceCard({ card, onRemove }: Prop) {
     animate-fadeIn
   "
         >
-            <button
-                onClick={() => onRemove(card.name)}
-                className="
-      absolute top-3 right-3
-      text-gray-400
-      opacity-0 group-hover:opacity-100
-      
-      transition-all duration-200
-      z-10
-    "
-            >
-                <X size={18} />
-            </button>
 
-            <h3 className="text-lg font-semibold text-gray-800">{card.name}</h3>
+            {card.isNew &&
+
+                <button
+                    onClick={() => onRemove(card.name)}
+                    className="
+            absolute top-3 right-3
+            text-gray-400
+            opacity-0 group-hover:opacity-100
+            
+            transition-all duration-200
+            z-10
+            "
+                >
+                    <X size={18} />
+                </button>
+            }
+
+            <div className="flex flex-row items-center gap-2">
+                {
+                    card.isNew &&
+                    <CircleDashed size={18} className="text-yellow-300" />
+                }
+                <h3 className="text-lg font-semibold text-gray-800">{card.name}</h3>
+            </div>
             <p className="text-sm text-gray-500 mt-1 flex-1">{card.description}</p>
 
             <div className="mt-4 flex items-baseline justify-between">

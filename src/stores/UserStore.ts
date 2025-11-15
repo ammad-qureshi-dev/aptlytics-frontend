@@ -6,7 +6,9 @@ import { User } from "./Types";
 
 interface UserStore {
   user: User | null | undefined;
-  setUser: (user: User | null) => void;
+  setUser: (
+    user: User | null | ((prevUser: User | null | undefined) => User | null)
+  ) => void;
   clearUser: () => void;
   rehydrated: boolean;
   setRehydrated: (v: boolean) => void;
@@ -17,7 +19,13 @@ export const useUserStore = create<UserStore>()(
     (set) => ({
       user: undefined,
       rehydrated: false,
-      setUser: (user) => set({ user }),
+
+      setUser: (userOrFn) =>
+        set((state) => ({
+          user:
+            typeof userOrFn === "function" ? userOrFn(state.user) : userOrFn,
+        })),
+
       clearUser: () => set({ user: null }),
       setRehydrated: (v) => set({ rehydrated: v }),
     }),
@@ -26,7 +34,6 @@ export const useUserStore = create<UserStore>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ user: state.user }),
       onRehydrateStorage: () => (state) => {
-        // mark store as rehydrated once done
         if (state) state.setRehydrated(true);
       },
     }

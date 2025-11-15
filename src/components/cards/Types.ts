@@ -19,4 +19,5 @@ export type ServiceCardType = {
   price: number;
   time: number;
   serviceLength: "MINUTE" | "HOUR" | "DAY" | "WEEK";
+  isNew?: boolean;
 };
